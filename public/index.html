@@ -5,6 +5,131 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>CONVERRA — One platform. Every connection.</title>
 <style>
+ /* =========================================
+   CONVERRA — FINAL SIDEBAR SIZE FIX
+   ========================================= */
+
+.sidebar {
+    position: fixed !important;
+    left: 0 !important;
+    top: 0 !important;
+    bottom: 0 !important;
+
+    width: 246px !important;
+    min-width: 246px !important;
+    max-width: 246px !important;
+
+    height: 100vh !important;
+    box-sizing: border-box !important;
+
+    display: flex !important;
+    flex-direction: column !important;
+
+    padding: 26px 15px !important;
+
+    background: linear-gradient(
+        180deg,
+        #285260 0%,
+        #183A43 68%,
+        #285260 100%
+    ) !important;
+
+    z-index: 100 !important;
+}
+
+
+/* MAIN CONTENT — USE ALL THE REMAINING SPACE */
+
+main {
+    margin-left: 246px !important;
+    width: calc(100% - 246px) !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+}
+
+
+/* NAVIGATION */
+
+.nav {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+
+    gap: 2px !important;
+
+    flex: 1 !important;
+    min-height: 0 !important;
+
+    width: 100% !important;
+
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+
+    padding-right: 4px !important;
+}
+
+
+/* NAV BUTTONS */
+
+.nav button {
+    width: 100% !important;
+    min-width: 0 !important;
+
+    padding: 8px 10px !important;
+
+    font-size: 11px !important;
+    line-height: 1.2 !important;
+
+    text-align: left !important;
+
+    white-space: nowrap !important;
+}
+
+
+/* SIDEBAR NOTE */
+
+.side-note {
+    flex-shrink: 0 !important;
+    margin: 12px 7px 0 !important;
+}
+
+
+/* DESKTOP — KEEP SIDEBAR SMALL */
+
+@media (min-width: 701px) {
+    .sidebar {
+        width: 246px !important;
+    }
+
+    main {
+        margin-left: 246px !important;
+        width: calc(100% - 246px) !important;
+    }
+}
+
+
+/* MOBILE */
+
+@media (max-width: 700px) {
+
+    .sidebar {
+        position: relative !important;
+        width: 100% !important;
+        max-width: none !important;
+        min-width: 0 !important;
+        height: auto !important;
+    }
+
+    main {
+        margin-left: 0 !important;
+        width: 100% !important;
+    }
+
+    .nav {
+        display: grid !important;
+        max-height: 60vh !important;
+        overflow-y: auto !important;
+    }
+}
  :root{
   /* CONVERRA ocean editorial palette — based on the supplied references */
   --night:#285260;--blackcurrant:#183A43;--purple:#502C55;--sunset:#70416F;
