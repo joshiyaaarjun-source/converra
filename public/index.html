@@ -1,0 +1,1003 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CONVERRA — One platform. Every connection.</title>
+<style>
+ :root{
+  /* CONVERRA ocean editorial palette — based on the supplied references */
+  --night:#285260;--blackcurrant:#183A43;--purple:#502C55;--sunset:#70416F;
+  --grape:#875585;--raspberry:#935CAA;--plum:#B28AAF;
+  --ocean:#548C92;--ice:#B4D7D8;--sand:#E0D7CF;--tan:#AB9072;
+  --navy:#0A1680;--sky:#93B2F8;--butter:#FBEDB0;--orange:#F1B94C;--white:#FCFDFF;
+  --paper:#EAF0EF;--ink:#17262B;--muted:#5E7075;--line:#C8D4D5;--line2:#A7BCBE;
+  --green:#2D8B72;--yellow:#C58D2A;--red:#B94B57;
+  --serif:Georgia,"Times New Roman",serif;
+  --sans:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:13px;letter-spacing:.01em}
+button,input,select{font:inherit}
+button{cursor:pointer}
+button:disabled{cursor:not-allowed;opacity:.45}
+.app{display:flex;min-height:100vh;background:linear-gradient(180deg,#D8E6E7 0%,#EAF0EF 46%,#E0D7CF 100%);}
+.sidebar{position:fixed;left:0;top:0;bottom:0;width:246px;background:linear-gradient(180deg,#285260 0%,#183A43 68%,#285260 100%);border-right:1px solid rgba(252,253,255,.12);padding:26px 15px;z-index:20;box-shadow:10px 0 30px rgba(40,82,96,.16)}
+.brand{padding:2px 10px 24px;border-bottom:1px solid rgba(252,253,255,.18)}
+.brand-name{font-family:var(--serif);font-size:28px;letter-spacing:.04em;color:#FCFDFF}
+.brand-tag{font-size:10px;color:#B4D7D8;margin-top:5px;letter-spacing:.05em}
+.country-box{margin:18px 8px 20px}
+.country-box label{display:block;font-size:9px;color:#B4D7D8;text-transform:uppercase;letter-spacing:.12em;margin-bottom:6px}
+.country-box select{width:100%;background:#183A43;border:1px solid rgba(180,215,216,.35);color:#FCFDFF;padding:11px 12px;border-radius:4px}
+.nav-title{font-size:9px;color:#B4D7D8;text-transform:uppercase;letter-spacing:.15em;padding:0 10px 7px}
+.nav{display:grid;gap:2px}
+.nav button{border:0;background:none;color:#D8E8E9;text-align:left;padding:10px 11px;border-radius:4px}
+.nav button:hover{background:rgba(180,215,216,.12);color:#FCFDFF}
+.nav button.active{background:#548C92;color:#FFF;border-left:3px solid #FBEDB0}
+.side-note{position:absolute;bottom:18px;left:22px;right:18px;color:#B4D7D8;font-size:9px;line-height:1.6}
+main{margin-left:246px;width:calc(100% - 246px);min-height:100vh;background:transparent}
+.top{height:76px;border-bottom:1px solid rgba(40,82,96,.18);display:flex;align-items:center;justify-content:space-between;padding:0 34px;background:rgba(252,253,255,.88);backdrop-filter:blur(12px);position:sticky;top:0;z-index:15}
+.context{color:#756C76;font-size:11px}.context b{color:var(--ink);font-weight:600}
+.top-actions{display:flex;gap:8px}
+.btn{background:#FCFDFF;color:var(--ink);border:1px solid #BDB7BD;padding:10px 14px;border-radius:4px;font-size:11px;transition:.18s ease}
+.btn:hover{border-color:#548C92;background:#EAF3F3}
+.btn.primary{background:#285260;border-color:#285260;color:#FFF}
+.btn.primary:hover{background:#548C92}
+.content{padding:34px 36px 70px;max-width:1500px}
+.view{display:none}.view.active{display:block}
+.kicker{font-size:9px;text-transform:uppercase;letter-spacing:.17em;color:#70416F;font-weight:600}
+h1,h2,h3{margin:0;font-weight:500}
+h1{font-family:var(--serif);font-size:56px;line-height:.98;margin-top:8px;letter-spacing:-.025em}
+h2{font-family:var(--serif);font-size:36px;letter-spacing:-.02em}
+h3{font-size:15px}
+.lede{color:#675F69;max-width:760px;line-height:1.7;margin:15px 0 0}
+.page-head{display:flex;justify-content:space-between;gap:25px;align-items:flex-end;margin-bottom:24px}
+.page-head .actions{display:flex;gap:7px;flex-wrap:wrap}
+.hero{padding:44px 46px 40px;border:1px solid rgba(40,82,96,.14);border-radius:6px;background:linear-gradient(135deg,#FCFDFF 0%,#E8F2F2 52%,#E0D7CF 100%);margin-bottom:24px;box-shadow:0 12px 35px rgba(58,49,61,.07)}
+.hero-rule{width:80px;height:3px;background:#F1B94C;margin-top:24px}
+.grid{display:grid;gap:12px}.g4{grid-template-columns:repeat(4,1fr)}.g3{grid-template-columns:repeat(3,1fr)}.g2{grid-template-columns:1.3fr .7fr}
+.card{background:rgba(252,253,255,.92);border:1px solid rgba(40,82,96,.12);padding:24px;border-radius:7px;box-shadow:0 9px 28px rgba(58,49,61,.09)}
+.card h3{margin-bottom:12px;color:var(--ink)}.small{font-size:10px;color:#766D77}.mono{font-variant-numeric:tabular-nums}
+.metric{min-height:128px}.metric .label{font-size:9px;text-transform:uppercase;letter-spacing:.12em;color:#756C76}
+.metric .value{font-family:var(--serif);font-size:30px;margin-top:13px;color:var(--ink)}.metric .sub{font-size:10px;color:#756C76;margin-top:5px}
+.status{font-size:9px;text-transform:uppercase;letter-spacing:.08em;padding:4px 6px;border:1px solid currentColor;border-radius:3px;display:inline-block}
+.ok{color:var(--green)}.warn{color:var(--yellow)}.bad{color:var(--red)}
+.table-wrap{overflow:auto;border:1px solid rgba(40,82,96,.14);border-radius:5px;background:#F5FAFA}
+table{border-collapse:collapse;width:100%;min-width:720px}
+th,td{padding:14px 14px;border-bottom:1px solid #D1CCD1;text-align:left;font-size:11px}
+th{color:#285260;font-size:9px;text-transform:uppercase;letter-spacing:.11em;font-weight:600;background:#D8E8E9}
+tr:last-child td{border-bottom:0}tr:hover td{background:#EEF6F6}
+form .fields{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.field label{display:block;font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px}
+.field input,.field select{width:100%;background:#FCFDFF;color:var(--ink);border:1px solid #BDB7BD;border-radius:4px;padding:11px}
+.field input:focus,.field select:focus{outline:2px solid rgba(84,140,146,.22);border-color:#548C92}
+.form-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:16px}
+.callout{border-left:3px solid #548C92;background:#EAF3F3;padding:15px 17px;line-height:1.65;color:#4E4651;border-radius:0 12px 12px 0}
+.list{display:grid;gap:0}.list-row{display:flex;justify-content:space-between;gap:15px;padding:13px 0;border-bottom:1px solid #D1CCD1}.list-row:last-child{border-bottom:0}
+.list-row b{font-weight:500}.list-row span{color:var(--muted)}
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:16px}.tabs button{background:none;border:0;color:#756C76;padding:10px 12px;border-bottom:2px solid transparent}.tabs button.active{color:var(--ink);border-bottom-color:#548C92}
+.chart{width:100%;height:280px;display:block}
+.chart text{font-family:var(--sans);font-size:9px;fill:#776D7B}
+.axis{stroke:#C9C4C9;stroke-width:1}.hist{fill:none;stroke:#8A8C8F;stroke-width:2}.forecast{fill:none;stroke:#285260;stroke-width:2.5}.band{fill:rgba(84,140,146,.16)}
+.bar{height:7px;background:#D3CDD2;border-radius:10px}.bar i{height:100%;display:block;background:#548C92;border-radius:10px}
+.map{position:relative;min-height:380px;background:radial-gradient(circle at 25% 25%,rgba(180,215,216,.92),transparent 35%),linear-gradient(135deg,#285260,#548C92 55%,#B4D7D8);border:0;border-radius:24px;overflow:hidden;box-shadow:0 9px 28px rgba(58,49,61,.09)}
+.map:before,.map:after{content:"";position:absolute;border:1px solid rgba(58,49,61,.13);border-radius:50%;inset:12% 18% 15% 12%;transform:rotate(-20deg)}
+.map:after{inset:24% 6% 23% 30%;transform:rotate(22deg)}
+.port-dot{position:absolute;width:10px;height:10px;border-radius:50%;background:#F1B94C;box-shadow:0 0 0 5px rgba(112,65,111,.12)}
+.port-dot label{position:absolute;left:15px;top:-5px;white-space:nowrap;font-size:9px;color:#3A313D;font-weight:600}
+.route-line{position:absolute;height:2px;background:linear-gradient(90deg,#FBEDB0,rgba(251,237,176,0));transform-origin:left center;opacity:.75}
+.slider{width:100%;accent-color:var(--raspberry)}
+.kpi-line{display:flex;align-items:baseline;justify-content:space-between;gap:10px}.kpi-line strong{font-family:var(--serif);font-size:23px}
+.tag{font-size:9px;padding:5px 7px;background:#E8DDE8;color:#70416F;border:1px solid #C7B7C8;border-radius:3px}
+.report{max-width:900px}.report h2{margin-bottom:9px}.report-section{border-top:1px solid var(--line);padding:20px 0}
+.palette{display:flex;height:8px;margin-top:18px}.palette i{flex:1}
+.footer-note{margin-top:25px;color:#756C76;font-size:9px}
+.toast{position:fixed;right:22px;bottom:22px;background:#285260;color:#F7F3F5;padding:12px 15px;border-radius:6px;z-index:100;font-size:11px;box-shadow:0 8px 25px rgba(58,49,61,.2)}
+@media(max-width:1050px){.sidebar{width:205px}main{margin-left:205px;width:calc(100% - 205px)}.g4{grid-template-columns:repeat(2,1fr)}.g2{grid-template-columns:1fr}}
+@media(max-width:700px){.app{display:block}.sidebar{position:relative;width:100%;height:auto;bottom:auto}.side-note{display:none}.nav{display:flex;overflow:auto}.nav button{white-space:nowrap}.country-box{max-width:280px}main{margin:0;width:100%}.top{padding:0 15px}.top-actions{display:none}.content{padding:20px 15px}.page-head{display:block}.g4,.g3,form .fields{grid-template-columns:1fr}h1{font-size:34px}}
+
+/* SIH extension layer — preserves the Converra information hierarchy */
+.role-gate{position:fixed;inset:0;background:rgba(13,8,25,.96);z-index:80;display:flex;align-items:center;justify-content:center;padding:24px}
+.role-gate.hidden{display:none}
+.role-panel{width:min(980px,100%);background:#DADBDF;color:#201A22;border-radius:14px;padding:34px;box-shadow:0 30px 90px rgba(0,0,0,.55)}
+.role-panel .kicker{color:#70416F}.role-panel h1{font-family:var(--serif);font-size:44px;color:#201A22}.role-panel .lead{color:#655B69;max-width:680px;line-height:1.65}
+.role-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:24px}
+.role-card{background:#F5F1F3;border:1px solid #C3BEC4;border-radius:8px;padding:18px;min-height:185px;text-align:left;color:#201A22;transition:.15s}
+.role-card:hover{transform:translateY(-2px);border-color:#875585;background:#EEE9ED}
+.role-card .role-name{font-family:var(--serif);font-size:21px;margin-bottom:8px}
+.role-card .role-desc{font-size:11px;color:#655B69;line-height:1.5;min-height:50px}
+.role-card .role-action{margin-top:18px;font-size:9px;text-transform:uppercase;letter-spacing:.12em;color:#70416F}
+.demo-badge{display:inline-block;background:#3A313D;color:#F5F1F3;border-radius:3px;padding:4px 7px;font-size:9px;letter-spacing:.12em;text-transform:uppercase}
+.role-strip{display:flex;align-items:center;gap:9px;margin-bottom:18px}
+.role-strip span{font-size:10px;color:var(--muted)}
+.compact-settings{margin-top:-7px}.settings-row{display:grid;grid-template-columns:1fr 1fr;gap:5px}.settings-row select{width:100%;background:#18101F;border:1px solid var(--line2);color:var(--white);padding:8px;border-radius:5px;font-size:10px}
+.entity-nav{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin-top:12px}
+.entity-btn{background:#17101D;border:1px solid var(--line);color:#AAA0AD;padding:9px;border-radius:4px;text-align:left;font-size:10px}
+.entity-btn:hover{border-color:var(--plum);color:var(--white)}
+.explain{margin-top:13px;border-left:2px solid var(--plum);padding:13px 15px;background:#17101D}
+.explain .ex-label{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--plum);margin-bottom:5px}
+.explain p{margin:0;color:#C5BDC7;line-height:1.55}
+.tech-panel{margin-top:10px;border:1px solid var(--line);background:#0F0A15;padding:13px;display:none}
+.tech-panel.open{display:block}.tech-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.tech-grid div{padding:10px;background:#15101A}.tech-grid b{display:block;font-size:9px;color:var(--muted);text-transform:uppercase}.tech-grid span{display:block;margin-top:5px;font-size:10px}
+.related{margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}.related a{display:inline-block;color:var(--plum);margin:5px 14px 0 0;font-size:10px;text-decoration:none}.related a:hover{text-decoration:underline}
+.country-context{font-size:9px;color:var(--plum);text-transform:uppercase;letter-spacing:.12em;margin-top:5px}
+@media(max-width:800px){.role-grid{grid-template-columns:1fr 1fr}.entity-nav{grid-template-columns:1fr 1fr}.tech-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.role-grid{grid-template-columns:1fr}.role-panel{padding:22px}.role-panel h1{font-size:34px}}
+
+
+/* Ocean reference UI: editorial cards, photography-like gradients, restrained chrome */
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.18;background:radial-gradient(ellipse at 70% 15%,rgba(180,215,216,.7),transparent 35%),radial-gradient(ellipse at 10% 80%,rgba(171,144,114,.28),transparent 28%);z-index:-1}
+.hero h1{color:#173B45}
+.kicker{color:#285260}
+.tag{background:#D8E8E9;color:#285260;border-color:#A7C8CA}
+.status.ok{color:#2D8B72}.status.warn{color:#A36E18}.status.bad{color:#B94B57}
+.palette i:nth-child(1){background:#285260!important}.palette i:nth-child(2){background:#548C92!important}.palette i:nth-child(3){background:#B4D7D8!important}.palette i:nth-child(4){background:#E0D7CF!important}.palette i:nth-child(5){background:#AB9072!important}.palette i:nth-child(6){background:#0A1680!important}.palette i:nth-child(7){background:#93B2F8!important}.palette i:nth-child(8){background:#FBEDB0!important}.palette i:nth-child(9){background:#F1B94C!important}
+.ocean-card{background:linear-gradient(135deg,#285260,#548C92);color:#FCFDFF;border:none}.ocean-card .small,.ocean-card .label{color:#D8E8E9}.ocean-card .value{color:#FCFDFF}
+.sun-card{background:linear-gradient(135deg,#FBEDB0,#F1B94C);color:#17262B;border:none}.ice-card{background:#B4D7D8;color:#173B45;border:none}.sand-card{background:#E0D7CF;color:#3E3027;border:none}
+.section-rule{height:1px;background:linear-gradient(90deg,#548C92,transparent);margin:20px 0}
+.copilot{position:fixed;right:20px;bottom:20px;width:360px;max-width:calc(100vw - 40px);background:#FCFDFF;border:1px solid #9DBABD;border-radius:8px;box-shadow:0 22px 55px rgba(40,82,96,.22);z-index:60;overflow:hidden;display:none}.copilot.open{display:block}.copilot-head{background:#285260;color:#FCFDFF;padding:13px 15px;display:flex;justify-content:space-between;align-items:center}.copilot-head strong{font-family:var(--serif);font-size:18px}.copilot-body{padding:13px}.copilot-msgs{max-height:280px;overflow:auto;display:grid;gap:8px;margin-bottom:10px}.msg{padding:9px 10px;border-radius:6px;font-size:11px;line-height:1.5}.msg.ai{background:#EAF3F3;color:#285260}.msg.user{background:#EEE4EF;color:#502C55;margin-left:24px}.copilot-input{display:flex;gap:7px}.copilot-input input{flex:1;border:1px solid #A7BCBE;border-radius:4px;padding:9px;background:#FCFDFF}.suggestions{display:flex;gap:5px;flex-wrap:wrap;margin:8px 0}.suggestions button{font-size:9px;border:1px solid #A7BCBE;background:#F3F8F8;color:#285260;padding:6px 7px;border-radius:4px}.source-line{font-size:9px;color:#66797E;margin-top:7px;border-top:1px solid #D8E2E3;padding-top:7px}.source-line b{color:#285260}
+@media(max-width:700px){.copilot{right:10px;bottom:10px;width:calc(100vw - 20px)}main{margin-left:0;width:100%}.sidebar{position:relative;width:100%;height:auto}.nav{display:flex;overflow:auto}.nav button{white-space:nowrap}}
+
+</style>
+<script src="/api-bridge.js"></script>
+</head>
+<body>
+
+<div class="role-gate hidden" id="roleGate">
+  <div class="role-panel">
+    <div class="role-strip"><span class="demo-badge">Demo workspace</span><span>SIH prototype · no login required</span></div>
+    <div class="kicker">CONVERRA</div>
+    <h1>Intelligent freight planning for smarter maritime decisions.</h1>
+    <p class="lead">Explore the same connected Converra platform from four working perspectives. Your selection changes the emphasis of the workspace — not the underlying data or decision engine.</p>
+    <div class="role-grid">
+      <button class="role-card" onclick="enterRole('procurement')"><div class="role-name">Procurement</div><div class="role-desc">Cargo sourcing, supplier comparison, quantity allocation, commodity price and procurement risk.</div><div class="role-action">Enter workspace →</div></button>
+      <button class="role-card" onclick="enterRole('chartering')"><div class="role-name">Chartering</div><div class="role-desc">Vessels, freight forecast, charter windows, contract strategy and charter cost.</div><div class="role-action">Enter workspace →</div></button>
+      <button class="role-card" onclick="enterRole('operations')"><div class="role-name">Operations</div><div class="role-desc">Ports, routes, voyages, ETA, congestion, disruptions and replanning.</div><div class="role-action">Enter workspace →</div></button>
+      <button class="role-card" onclick="enterRole('executive')"><div class="role-name">Executive</div><div class="role-desc">Total cost, forecast, cargo plan, charter plan, risk and strategic decisions.</div><div class="role-action">Enter workspace →</div></button>
+    </div>
+  </div>
+</div>
+
+<div class="app">
+<aside class="sidebar">
+  <div class="brand">
+    <div class="brand-name">CONVERRA</div>
+    <div class="brand-tag">One platform. Every connection.</div>
+  </div>
+  <div class="country-box">
+    <label>Operating country</label>
+    <select id="countrySelect" onchange="setCountry(this.value)">
+      <option value="IN">India</option><option value="AU">Australia</option><option value="ID">Indonesia</option>
+      <option value="ZA">South Africa</option><option value="RU">Russia</option><option value="MZ">Mozambique</option>
+      <option value="US">United States</option><option value="CO">Colombia</option><option value="CA">Canada</option><option value="BR">Brazil</option>
+      <option value="AE">United Arab Emirates</option><option value="SG">Singapore</option><option value="GB">United Kingdom</option>
+    </select>
+  </div>
+  <div class="country-box compact-settings">
+    <label>Planning preferences</label>
+    <div class="settings-row">
+      <select id="currencySelect" onchange="setCurrency(this.value)">
+        <option value="INR">INR ₹</option><option value="USD">USD $</option><option value="EUR">EUR €</option>
+        <option value="GBP">GBP £</option><option value="AUD">AUD A$</option><option value="CAD">CAD C$</option>
+        <option value="ZAR">ZAR R</option><option value="AED">AED د.إ</option><option value="SGD">SGD S$</option>
+      </select>
+      <select id="unitSelect" onchange="setUnits(this.value)">
+        <option value="metric">MT · NM</option><option value="imperial">Ton · mi</option>
+      </select>
+    </div>
+  </div>
+  <div class="nav-title">Converra workspace</div>
+  <nav class="nav">
+    <button class="active" data-view="home">Dashboard</button>
+    <button data-view="forecast">Freight Forecast</button>
+    <button data-view="fuel">Fuel Forecast</button>
+    <button data-view="create">Cargo Procurement</button>
+    <button data-view="vessels">Ships</button>
+    <button data-view="ports">Ports</button>
+    <button data-view="routes">Routes</button>
+    <button data-view="charter">Charter Optimizer</button>
+    <button data-view="contract">Contract Strategy</button>
+    <button data-view="regulations">Regulations</button>
+    <button data-view="simulator">What-If Simulator</button>
+    <button data-view="counterfactual">Counterfactual Analysis</button>
+    <button data-view="risks">Risk Monitor</button>
+    <button data-view="disruptions">Disruptions</button>
+    <button data-view="report">Decision Reports</button>
+    <button data-view="copilotView">AI Copilot</button>
+    <button data-view="settings">Settings</button>
+    <button data-view="solution">Platform Logic</button>
+  </nav>
+  <div class="side-note">PS26006 · Maritime decision support<br>Demo data is labelled. Calculations run locally in this prototype.</div>
+</aside>
+
+<main>
+<header class="top">
+  <div class="context"><b id="countryName">India</b> · <span id="currencyName">Indian Rupee (INR)</span> · <span id="todayText"></span></div>
+  <div class="top-actions">
+    <select class="btn" id="roleSelect" onchange="setWorkspace(this.value)" style="padding:9px 10px">
+      <option value="executive">Executive focus</option><option value="procurement">Procurement focus</option><option value="chartering">Chartering focus</option><option value="operations">Operations focus</option>
+    </select>
+    <button class="btn" onclick="resetDemo()">Reset</button>
+    <button class="btn" onclick="toggleCopilot()">CONVERRA COPILOT</button>
+    <button class="btn primary" onclick="navigate('create')">Start planning</button>
+  </div>
+</header>
+
+<div class="content">
+
+<section class="view active" id="home">
+  <div class="hero">
+    <div class="kicker">CONVERRA / PS26006</div>
+    <h1>One platform.<br>Every connection.</h1>
+    <div class="country-context">Operating preference: workspace country · Core trade lane: overseas bulk cargo → East Coast India</div><p class="lede">A practical decision workspace for freight, cargo, vessels, ports and charter strategy. Change the country and the operating context follows — currency, origins, destination ports, routes, vessel data and planning assumptions.</p>
+    <div class="hero-rule"></div>
+    <div class="palette"><i style="background:#0D0819"></i><i style="background:#2E1839"></i><i style="background:#502C55"></i><i style="background:#70416F"></i><i style="background:#875585"></i><i style="background:#9D6B99"></i><i style="background:#B28AAF"></i><i style="background:#D8E2E8"></i><i style="background:#E8E7E6"></i></div>
+  </div>
+
+
+  <div class="grid g3" style="margin-bottom:12px"><div class="card ocean-card"><div class="kicker" style="color:#FBEDB0">Market</div><h3 style="margin-top:7px">Freight + fuel watch</h3><p class="small" id="marketBanner">Modeled rates and bunker exposure are available in Forecast.</p></div><div class="card ice-card"><div class="kicker">Port window</div><h3 style="margin-top:7px" id="tideBanner">Next tide window</h3><p class="small" id="tideBannerText">Draft-aware arrival window for the selected port.</p></div><div class="card sun-card"><div class="kicker">Alert</div><h3 style="margin-top:7px" id="alertBanner">Review booking window</h3><p class="small" id="alertBannerText">Freight, fuel and compliance signals are checked below.</p></div></div>
+  <div class="role-strip"><span class="demo-badge" id="roleBadge">DEMO MODE</span><span id="roleDescription">Executive view · cost, risk and decisions</span></div>
+  <div class="entity-nav">
+    <button class="entity-btn" onclick="openEntity('ships')">Ships →</button>
+    <button class="entity-btn" onclick="openEntity('ports')">Ports →</button>
+    <button class="entity-btn" onclick="openEntity('cargo')">Cargo →</button>
+    <button class="entity-btn" onclick="openEntity('routes')">Routes →</button>
+    <button class="entity-btn" onclick="openEntity('scenarios')">Scenarios →</button>
+  </div>
+  <div class="grid g4" id="metrics"></div>
+
+  <div class="grid g2" style="margin-top:12px">
+    <div class="card">
+      <div class="kpi-line"><h3>Freight outlook</h3><span class="tag" id="forecastTag">90 day</span></div>
+      <svg class="chart" id="homeChart" viewBox="0 0 900 280" preserveAspectRatio="none"></svg>
+    </div>
+    <div class="card">
+      <div class="kpi-line"><h3>Current planning context</h3><span class="small">selected country</span></div>
+      <div class="list" id="contextList"></div>
+    </div>
+  </div>
+
+
+  <div class="explain" id="homeExplanation">
+    <div class="ex-label">What this means</div><p id="meaningText">Freight conditions are shown with their operating context.</p>
+    <div class="ex-label" style="margin-top:10px">Why it matters</div><p id="whyText">Changes in freight and port conditions affect transportation exposure.</p>
+    <div class="ex-label" style="margin-top:10px">Recommended action</div><p id="actionText">Review feasible charter and port alternatives before committing.</p>
+  </div>
+  <button class="btn" style="margin-top:9px" onclick="toggleTech('homeTech')">View technical analysis</button>
+  <div class="tech-panel" id="homeTech"><div class="tech-grid">
+    <div><b>Model</b><span>XGBoost / LightGBM</span></div><div><b>Explainability</b><span>SHAP</span></div><div><b>Optimization</b><span>OR-Tools / MILP</span></div><div><b>Simulation</b><span>Monte Carlo</span></div>
+  </div></div>
+
+  <div class="grid g3" style="margin-top:12px">
+    <div class="card"><div class="kicker">Forecast</div><h3 style="margin-top:7px">Range, not a single guess</h3><p class="small">Point forecast, prediction interval, volatility and major drivers stay visible together.</p></div>
+    <div class="card"><div class="kicker">Optimization</div><h3 style="margin-top:7px">Constraints first</h3><p class="small">Cargo, vessel, port, deadline and supply limits are checked before a plan is returned.</p></div>
+    <div class="card"><div class="kicker">Counterfactual</div><h3 style="margin-top:7px">See the road not taken</h3><p class="small">Change a date, vessel, port or contract and recalculate the alternative plan.</p></div>
+  </div>
+</section>
+
+<section class="view" id="create">
+  <div class="page-head"><div><div class="kicker">01 / Create plan</div><h2>Start with the cargo requirement.</h2><p class="lede">The country selection sets the default operating geography. You can still choose any supported origin and destination.</p></div></div>
+  <div class="card">
+    <form id="planForm" onsubmit="generatePlan(event)">
+      <div class="fields">
+        <div class="field"><label>Commodity</label><select id="commodity"><option>Coking Coal</option><option>Non-Coking Coal</option><option>Other Bulk Cargo</option><option>Iron Ore</option><option>Limestone</option><option>Bauxite</option></select></div>
+        <div class="field"><label>Cargo quantity (MT)</label><input id="cargoQty" type="number" min="1000" step="1000" value="500000"></div>
+        <div class="field"><label>Origin country</label><select id="origin"></select></div>
+        <div class="field"><label>Origin port</label><select id="originPort"></select></div>
+        <div class="field"><label>Destination / discharge port</label><select id="destination"></select></div>
+        <div class="field"><label>Required by</label><input id="deadline" type="date"></div>
+        <div class="field"><label>Procurement price / MT</label><input id="procPrice" type="number" min="0" step="0.1" placeholder="e.g. 185"></div>
+        <div class="field"><label>Expected availability</label><input id="availabilityDate" type="date"></div>
+        <div class="field"><label>Preferred contract</label><select id="contract"><option>Let optimizer decide</option><option>Spot</option><option>COA</option><option>Time Charter</option></select></div>
+        <div class="field"><label>Vessel preference</label><select id="vesselPref"><option>Any feasible class</option><option>Handysize</option><option>Supramax</option><option>Panamax</option><option>Capesize</option></select></div>
+        <div class="field"><label>Budget per MT (optional)</label><input id="budget" type="number" min="0" placeholder="Leave blank for unconstrained"></div>
+      </div>
+      <div class="form-actions"><button type="button" class="btn" onclick="resetDemo()">Clear</button><button class="btn primary" type="submit">Generate plan</button></div>
+    </form>
+  </div>
+  <div id="planResult" style="margin-top:12px"></div>
+</section>
+
+<section class="view" id="forecast">
+  <div class="page-head"><div><div class="kicker">02 / Uncertainty-aware forecasting</div><h2>What might freight cost?</h2></div><div class="actions"><button class="btn" onclick="runForecast()">Recalculate forecast</button></div></div>
+  <div class="grid g4" id="forecastMetrics"></div>
+  <div class="card" style="margin-top:12px"><svg class="chart" id="forecastChart" viewBox="0 0 1000 320" preserveAspectRatio="none"></svg></div>
+  <div class="grid g2" style="margin-top:12px">
+    <div class="card"><h3>Forecast drivers</h3><div id="drivers"></div></div>
+    <div class="card"><h3>Method note</h3><p class="small">Prototype inference uses the selected country, route, vessel class, fuel index and congestion assumptions. In the production stack this page is the presentation layer for the XGBoost/LightGBM pipeline, time-aware validation and SHAP explanations described in the project specification.</p><div class="callout">Demo values are model-generated scenario values, not live market quotes.</div></div>
+  </div>
+</section>
+
+<section class="view" id="fuel">
+  <div class="page-head"><div><div class="kicker">02B / Fuel forecasting</div><h2>Fuel is part of the voyage, not an afterthought.</h2><p class="lede">Bunker exposure feeds charter timing, landed cost and Monte Carlo risk.</p></div><div class="actions"><button class="btn" onclick="runFuelForecast()">Recalculate fuel</button></div></div>
+  <div class="grid g4" id="fuelMetrics"></div>
+  <div class="card" style="margin-top:12px"><svg class="chart" id="fuelChart" viewBox="0 0 1000 320" preserveAspectRatio="none"></svg></div>
+  <div class="grid g2" style="margin-top:12px"><div class="card"><h3>Fuel drivers</h3><div class="list"><div class="list-row"><b>Crude oil proxy</b><span id="crudeValue">Demo index</span></div><div class="list-row"><b>Bunker trend</b><span id="fuelTrend">Modeled</span></div><div class="list-row"><b>Voyage sensitivity</b><span id="fuelSensitivity">Medium</span></div></div></div><div class="explain"><div class="ex-label">What this means</div><p id="fuelMeaning">Fuel cost is modeled as an input to voyage exposure.</p><div class="ex-label" style="margin-top:10px">Why it matters</div><p id="fuelWhy">Higher bunker prices can make waiting to charter more expensive.</p><div class="ex-label" style="margin-top:10px">Recommended action</div><p id="fuelAction">Review charter windows when the fuel curve turns upward.</p></div></div>
+</section>
+
+<section class="view" id="procurement">
+  <div class="page-head"><div><div class="kicker">03 / Cargo procurement + charter jointly</div><h2>Allocate the requirement across origins.</h2></div></div>
+  <div class="grid g2">
+    <div class="card">
+      <h3 id="procTitle">500,000 MT requirement</h3>
+      <div id="allocation"></div>
+    </div>
+    <div class="card">
+      <h3>Procurement logic</h3>
+      <div class="list">
+        <div class="list-row"><b>Quantity constraint</b><span>must reach requirement</span></div>
+        <div class="list-row"><b>Supply availability</b><span>cannot exceed source supply</span></div>
+        <div class="list-row"><b>Freight exposure</b><span>linked to route forecast</span></div>
+        <div class="list-row"><b>Port feasibility</b><span>checked downstream</span></div>
+        <div class="list-row"><b>Deadline</b><span>propagates into voyages</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="view" id="vessels">
+  <div class="page-head"><div><div class="kicker">04 / Vessel intelligence</div><h2>Find a vessel that actually fits.</h2></div></div>
+  <div class="card"><div class="table-wrap"><table><thead><tr><th>Class</th><th>Capacity</th><th>Draft</th><th>Availability</th><th>Port fit</th><th>Voyages</th><th>Indicative cost</th><th>Status</th></tr></thead><tbody id="vesselTable"></tbody></table></div></div>
+</section>
+
+<section class="view" id="ports">
+  <div class="page-head"><div><div class="kicker">05 / Port intelligence</div><h2>Ports change with the operating country.</h2></div></div>
+  <div class="grid g2">
+    <div class="map" id="map"><div class="small" style="position:absolute;left:15px;top:13px">Schematic route view · not navigational</div></div>
+    <div class="card"><h3>Candidate ports</h3><div id="portCards"></div></div>
+  </div>
+</section>
+
+<section class="view" id="routes">
+  <div class="page-head"><div><div class="kicker">06A / Route intelligence</div><h2>Origin → sea route → East Coast India.</h2><p class="lede">Each route carries distance, transit, freight, vessel compatibility and risk context.</p></div></div>
+  <div class="grid g2"><div class="card"><h3>Supported trade lanes</h3><div class="table-wrap"><table><thead><tr><th>Origin</th><th>Origin port</th><th>Destination</th><th>Transit</th><th>Status</th></tr></thead><tbody id="routeTable"></tbody></table></div></div><div class="map" id="routeMap"><div class="small" style="position:absolute;left:15px;top:13px;color:#FCFDFF">Schematic route view · demo, not navigational</div></div></div>
+</section>
+
+<section class="view" id="contract">
+  <div class="page-head"><div><div class="kicker">06B / Contract strategy</div><h2>Compare exposure, flexibility and cost.</h2></div></div>
+  <div class="card"><div class="table-wrap"><table><thead><tr><th>Strategy</th><th>Total cost</th><th>Cost / MT</th><th>Exposure</th><th>Flexibility</th><th>Duration</th><th>Modeled basis</th></tr></thead><tbody id="contractTable"></tbody></table></div></div>
+  <div class="explain" style="margin-top:12px"><div class="ex-label">What this means</div><p>Contract options are compared against the same cargo and route assumptions.</p><div class="ex-label" style="margin-top:10px">Why it matters</div><p>Choosing a contract changes both cost exposure and how much flexibility remains if the market moves.</p><div class="ex-label" style="margin-top:10px">Recommended action</div><p>Use the optimizer result as decision support, then review the assumptions before committing.</p></div>
+</section>
+
+<section class="view" id="regulations">
+  <div class="page-head"><div><div class="kicker">06C / Water-type regulation checker</div><h2>Check the route before the charter.</h2><p class="lede">The prototype checks the selected vessel against a rulebook by water type. Each rule is shown with source and update status.</p></div></div>
+  <div class="grid g2"><div class="card"><h3>Route zones</h3><div class="list" id="regZones"></div></div><div class="card"><h3>Compliance</h3><div id="regChecks"></div><div class="callout" style="margin-top:12px">Decision support only. Verify applicable requirements with official authorities and shipping professionals before booking.</div></div></div>
+</section>
+
+<section class="view" id="counterfactual">
+  <div class="page-head"><div><div class="kicker">07B / Counterfactual analysis</div><h2>Replay the road not taken.</h2><p class="lede">Counterfactual mode treats a past or baseline decision as the reference and recalculates an alternative.</p></div></div>
+  <div class="card"><div class="actions" style="display:flex;gap:7px;flex-wrap:wrap"><button class="btn" onclick="counterfactual('earlier')">Charter 14 days earlier</button><button class="btn" onclick="counterfactual('later')">Charter 14 days later</button><button class="btn" onclick="counterfactual('port')">Use another port</button><button class="btn" onclick="counterfactual('vessel')">Use another vessel</button><button class="btn" onclick="counterfactual('contract')">Use COA</button></div><div class="callout" style="margin-top:15px" id="counterResult">Choose a counterfactual to calculate the alternative.</div></div>
+</section>
+
+<section class="view" id="disruptions">
+  <div class="page-head"><div><div class="kicker">08A / Disruption planning</div><h2>Detect → recalculate → re-optimize → explain.</h2></div></div>
+  <div class="grid g3" id="disruptionCards"></div>
+  <div class="card" style="margin-top:12px"><h3>Replanned result</h3><div class="grid g4" id="replanMetrics"></div><div class="callout" style="margin-top:12px" id="replanReason">No disruption selected.</div></div>
+</section>
+
+<section class="view" id="charter">
+  <div class="page-head"><div><div class="kicker">06 / Contract strategy</div><h2>Spot, COA or time charter.</h2></div></div>
+  <div class="card"><div class="table-wrap"><table><thead><tr><th>Strategy</th><th>Cost / MT</th><th>Total cost</th><th>Exposure</th><th>Flexibility</th><th>Voyages</th><th>Basis</th></tr></thead><tbody id="charterTable"></tbody></table></div></div>
+  <div class="card" style="margin-top:12px"><div class="callout">The interface compares strategies rather than hardcoding a winner. In the production optimizer, the selected strategy would be the result of the MILP objective and constraints.</div></div>
+</section>
+
+<section class="view" id="simulator">
+  <div class="page-head"><div><div class="kicker">07 / What-if + counterfactual</div><h2>Change the assumptions. Recalculate the plan.</h2></div></div>
+  <div class="grid g2">
+    <div class="card">
+      <div class="field"><label>Freight change</label><input class="slider" id="sFreight" type="range" min="-20" max="50" value="0" oninput="simulate()"><div class="small"><span id="sFreightV">0</span>%</div></div>
+      <div class="field" style="margin-top:16px"><label>Port congestion</label><input class="slider" id="sCongestion" type="range" min="0" max="100" value="35" oninput="simulate()"><div class="small"><span id="sCongestionV">35</span>%</div></div>
+      <div class="field" style="margin-top:16px"><label>Charter delay</label><input class="slider" id="sDelay" type="range" min="0" max="30" value="0" oninput="simulate()"><div class="small"><span id="sDelayV">0</span> days</div></div>
+      <div class="field" style="margin-top:16px"><label>Cargo change</label><input class="slider" id="sCargo" type="range" min="-100000" max="150000" step="10000" value="0" oninput="simulate()"><div class="small"><span id="sCargoV">0</span> MT</div></div>
+    </div>
+    <div class="card" id="simulationResult"></div>
+  </div>
+  <div class="card" style="margin-top:12px"><h3>Counterfactual shortcuts</h3><div class="page-head" style="margin:12px 0 0"><div class="actions"><button class="btn" onclick="counterfactual('earlier')">Charter 14 days earlier</button><button class="btn" onclick="counterfactual('later')">Charter 14 days later</button><button class="btn" onclick="counterfactual('port')">Switch destination port</button><button class="btn" onclick="counterfactual('vessel')">Switch vessel class</button><button class="btn" onclick="counterfactual('contract')">Switch contract</button></div></div><div id="counterResult" class="callout" style="margin-top:13px">Choose an alternative to calculate its estimated cost, delay and risk against the current plan.</div></div>
+</section>
+
+<section class="view" id="risks">
+  <div class="page-head"><div><div class="kicker">08 / Disruption-aware planning</div><h2>Watch the things that can break the plan.</h2></div></div>
+  <div class="grid g3" id="riskCards"></div>
+  <div class="card" style="margin-top:12px"><h3>Live demo alert stream</h3><div class="list" id="alertList"></div><div class="callout" style="margin-top:12px">Alerts are simulated from the current seeded scenario. A production deployment can send email or Telegram notifications.</div></div>
+  <div class="card" style="margin-top:12px"><h3>Replanning logic</h3><div class="callout" id="replanText"></div></div>
+</section>
+
+<section class="view" id="report">
+  <div class="page-head"><div><div class="kicker">09 / Decision report</div><h2>The whole decision in one place.</h2></div><div class="actions"><button class="btn" onclick="window.print()">Print / save PDF</button></div></div>
+  <div class="card report" id="reportBody"></div>
+</section>
+
+
+<section class="view" id="entity">
+  <div class="page-head"><div><div class="kicker" id="entityKicker">Entity detail</div><h2 id="entityTitle">Port details</h2><p class="lede" id="entitySubtitle">Connected entity view.</p></div><div class="actions"><button class="btn" onclick="navigate('home')">← Back</button></div></div>
+  <div class="grid g4" id="entityMetrics"></div>
+  <div class="grid g2" style="margin-top:12px"><div class="card"><h3>Graph / analysis</h3><svg class="chart" id="entityChart" viewBox="0 0 900 280" preserveAspectRatio="none"></svg></div><div class="card" id="entityStatus"></div></div>
+  <div class="explain"><div class="ex-label">What this means</div><p id="entityMeaning"></p><div class="ex-label" style="margin-top:10px">Why it matters</div><p id="entityWhy"></p><div class="ex-label" style="margin-top:10px">Recommended action</div><p id="entityAction"></p></div>
+  <button class="btn" style="margin-top:9px" onclick="toggleTech('entityTech')">View technical analysis</button>
+  <div class="tech-panel" id="entityTech"><div class="tech-grid"><div><b>Model version</b><span>SIH-DEMO-1.0</span></div><div><b>Data status</b><span>Seeded / demo</span></div><div><b>Constraints</b><span>Port + vessel + cargo</span></div><div><b>Solver</b><span>Prototype calculation</span></div></div></div>
+  <div class="card related"><h3>Related</h3><div id="relatedLinks"></div></div>
+</section>
+
+<section class="view" id="copilotView">
+  <div class="page-head"><div><div class="kicker">AI Copilot</div><h2>Ask CONVERRA about the decision.</h2><p class="lede">Contextual assistance for the current cargo, vessel, port, route, forecast and scenario. The SIH prototype uses seeded Converra data; production Copilot calls the backend tools.</p></div><div class="actions"><button class="btn primary" onclick="toggleCopilot()">Open Copilot panel</button></div></div>
+  <div class="grid g3"><div class="card ocean-card"><div class="kicker" style="color:#FBEDB0">Context aware</div><h3 style="margin-top:7px">Knows the page</h3><p class="small">Ship, port, route, What-If and report context are passed into the assistant.</p></div><div class="card ice-card"><div class="kicker">Grounded</div><h3 style="margin-top:7px">Uses Converra data</h3><p class="small">Ships, ports, cargo, forecasts, optimization results, risks and scenarios.</p></div><div class="card sun-card"><div class="kicker">Action capable</div><h3 style="margin-top:7px">Runs planning actions</h3><p class="small">Scenario creation, comparisons and planning actions require confirmation before persistent changes.</p></div></div>
+  <div class="card" style="margin-top:12px"><h3>Suggested questions</h3><div class="suggestions"><button onclick="toggleCopilot();askCopilot('Why is Paradip not being selected?')">Why this port?</button><button onclick="toggleCopilot();askCopilot('Which vessels are available?')">Which vessels?</button><button onclick="toggleCopilot();askCopilot('When should I charter?')">When should I charter?</button><button onclick="toggleCopilot();askCopilot('What is the biggest risk right now?')">Biggest risk?</button><button onclick="toggleCopilot();askCopilot('Summarize this plan')">Summarize plan</button></div></div>
+</section>
+
+<section class="view" id="settings">
+  <div class="page-head"><div><div class="kicker">Settings / Planning preferences</div><h2>Keep the workspace in your units.</h2><p class="lede">Operating country is a workspace preference. The core trade geography remains overseas bulk cargo → East Coast India.</p></div></div>
+  <div class="grid g3"><div class="card"><h3>Operating country</h3><p class="small">Current: <b id="settingsCountry">India</b></p><select id="settingsCountrySelect" class="btn" style="width:100%" onchange="document.getElementById('countrySelect').value=this.value;setCountry(this.value)"><option value="IN">India</option><option value="AU">Australia</option><option value="ID">Indonesia</option><option value="ZA">South Africa</option><option value="RU">Russia</option><option value="US">United States</option><option value="MZ">Mozambique</option><option value="CO">Colombia</option><option value="CA">Canada</option><option value="BR">Brazil</option></select></div><div class="card"><h3>Currency</h3><select class="btn" style="width:100%" onchange="setCurrency(this.value)"><option value="INR">INR ₹</option><option value="USD">USD $</option><option value="EUR">EUR €</option><option value="GBP">GBP £</option><option value="AUD">AUD A$</option><option value="CAD">CAD C$</option><option value="ZAR">ZAR R</option><option value="AED">AED د.إ</option><option value="SGD">SGD S$</option></select><p class="small">Demo exchange table only unless a live service is connected.</p></div><div class="card"><h3>Units</h3><select class="btn" style="width:100%" onchange="setUnits(this.value)"><option value="metric">Metric Tonnes · Nautical Miles</option><option value="imperial">Ton · Miles</option></select><p class="small">Dates and number formatting follow the workspace context.</p></div></div>
+</section>
+
+<section class="view" id="solution">
+  <div class="page-head"><div><div class="kicker">Platform logic</div><h2>Predict → understand → optimize → test.</h2></div></div>
+  <div class="card"><div class="table-wrap"><table><thead><tr><th>Capability</th><th>Conventional workflow</th><th>CONVERRA approach</th></tr></thead><tbody>
+    <tr><td>Explainable charter decision</td><td>Predict rate → recommendation</td><td>Show ML drivers and operational constraints behind the decision.</td></tr>
+    <tr><td>What-if simulator</td><td>One recommendation</td><td>Change freight, congestion, cargo, dates, vessel or port and recalculate.</td></tr>
+    <tr><td>Multi-port substitution</td><td>Vessel → destination</td><td>Compare feasible alternatives across the selected country's port network.</td></tr>
+    <tr><td>Contract strategy optimizer</td><td>Spot vs charter</td><td>Compare Spot, COA and Time Charter under uncertain future rates.</td></tr>
+    <tr><td>Uncertainty-aware forecasting</td><td>Predict $/MT</td><td>Point forecast + range + volatility + confidence indicator.</td></tr>
+    <tr><td>Disruption-aware planning</td><td>Congestion warning</td><td>Re-check route, vessel and charter plan after a disruption.</td></tr>
+    <tr><td>Cargo + charter jointly</td><td>Optimize shipping</td><td>Connect procurement allocation with vessels, ports, timing and contracts.</td></tr>
+    <tr><td>Counterfactual decision engine</td><td>“Do this”</td><td>Calculate what the alternative decision would have cost.</td></tr>
+  </tbody></table></div></div>
+  <div class="footer-note">Production architecture specified separately: Next.js + TypeScript + FastAPI + PostgreSQL/PostGIS + XGBoost/LightGBM + SHAP + OR-Tools + Monte Carlo. This single-file build is the interactive product prototype.</div>
+</section>
+
+</div>
+</main>
+</div>
+
+<script>
+
+/* CONVERRA SIH master-spec extension */
+const ORIGINS={
+ Indonesia:["Taboneo","Samarinda","Muara Jawa"], Australia:["Newcastle","Hay Point","Port Hedland"],
+ "South Africa":["Richards Bay","Durban","Saldanha Bay"], Russia:["Vostochny","Vanino","Taman"],
+ "United States":["Houston","New Orleans","Norfolk"], Mozambique:["Nacala","Beira","Maputo"],
+ Colombia:["Puerto Bolivar","Buenaventura"], Canada:["Vancouver","Prince Rupert"], Brazil:["Tubarao","Itaguai","Santos"]
+};
+const INDIA_PORTS=[
+ {name:"Paradip Port",state:"Odisha",draft:18,loa:330,beam:52,capacity:120,cost:6.2,congestion:42,status:"Operational",lat:20.26,lon:86.70},
+ {name:"Dhamra Port",state:"Odisha",draft:18,loa:330,beam:52,capacity:100,cost:5.8,congestion:32,status:"Operational",lat:20.79,lon:86.96},
+ {name:"Visakhapatnam / Vizag",state:"Andhra Pradesh",draft:18,loa:330,beam:52,capacity:100,cost:6.0,congestion:38,status:"Operational",lat:17.69,lon:83.22},
+ {name:"Krishnapatnam",state:"Andhra Pradesh",draft:18,loa:330,beam:52,capacity:60,cost:6.5,congestion:27,status:"Operational",lat:14.25,lon:80.12},
+ {name:"Kamarajar / Ennore",state:"Tamil Nadu",draft:16,loa:320,beam:50,capacity:50,cost:6.7,congestion:35,status:"Operational",lat:13.24,lon:80.32},
+ {name:"Chennai",state:"Tamil Nadu",draft:15,loa:310,beam:48,capacity:50,cost:7.0,congestion:49,status:"Operational",lat:13.08,lon:80.29},
+ {name:"V.O. Chidambaranar / Tuticorin",state:"Tamil Nadu",draft:14,loa:300,beam:46,capacity:45,cost:7.4,congestion:31,status:"Operational",lat:8.76,lon:78.14}
+];
+const ORIGIN_COUNTRIES=["Indonesia","Australia","South Africa","Russia","United States","Mozambique","Colombia","Canada","Brazil"];
+const FX={INR:1,USD:.0118,EUR:.0107,GBP:.0092,AUD:.0175,CAD:.0160,ZAR:.205,AED:.0433,SGD:.0152};
+const FXNAME={INR:"₹",USD:"$",EUR:"€",GBP:"£",AUD:"A$",CAD:"C$",ZAR:"R",AED:"د.إ",SGD:"S$"};
+let selectedCurrency="INR", selectedUnits="metric", selectedRole="executive";
+const ROLE_INFO={
+ procurement:["Procurement Manager","Cargo sourcing & procurement","Cargo requirement, origins, commodity price, allocation and procurement risk.","procurement"],
+ chartering:["Chartering Manager","Vessels & charter strategy","Vessels, freight forecast, charter windows, contract comparison and charter cost.","chartering"],
+ operations:["Logistics / Operations Manager","Ports, routes & disruptions","Active voyages, ports, routes, congestion, ETA, disruptions and replanning.","operations"],
+ executive:["Executive / Decision Maker","Cost, risk & decisions","Total logistics cost, forecast, cargo plan, charter plan, risk and decision recommendations.","executive"]
+};
+
+const DATA={
+IN:{name:"India",currency:"INR",symbol:"₹",commodity:"Coking Coal",origins:[
+ {name:"Australia",price:205,freight:24.8,supply:320000},
+ {name:"Indonesia",price:176,freight:22.4,supply:240000},
+ {name:"Mozambique",price:191,freight:27.1,supply:180000}
+],ports:[
+ {name:"Paradip",country:"India",draft:14,loa:290,beam:45,capacity:45,congestion:58,cost:6.2,delay:2.1,lat:53,lon:58},
+ {name:"Dhamra",country:"India",draft:18,loa:330,beam:50,capacity:55,congestion:32,cost:5.8,delay:1.1,lat:45,lon:51},
+ {name:"Visakhapatnam",country:"India",draft:16,loa:300,beam:48,capacity:50,congestion:41,cost:6.0,delay:1.5,lat:62,lon:68},
+ {name:"Krishnapatnam",country:"India",draft:17,loa:320,beam:48,capacity:40,congestion:27,cost:6.5,delay:1.0,lat:71,lon:77},
+ {name:"Ennore / Kamarajar",country:"India",draft:15,loa:300,beam:47,capacity:42,congestion:35,cost:6.7,delay:1.4,lat:80,lon:82},
+ {name:"Chennai",country:"India",draft:13,loa:290,beam:44,capacity:35,congestion:49,cost:7.0,delay:2.0,lat:85,lon:75}
+]},
+AU:{name:"Australia",currency:"AUD",symbol:"A$",commodity:"Coking Coal",origins:[
+ {name:"Australia",price:214,freight:18.2,supply:500000},
+ {name:"Indonesia",price:181,freight:20.6,supply:250000},
+ {name:"Mozambique",price:198,freight:25.9,supply:180000}
+],ports:[
+ {name:"Port Hedland",country:"Australia",draft:19,loa:330,beam:55,capacity:80,congestion:29,cost:7.1,delay:1.0,lat:29,lon:27},
+ {name:"Newcastle",country:"Australia",draft:16,loa:300,beam:48,capacity:55,congestion:46,cost:7.5,delay:1.8,lat:53,lon:60},
+ {name:"Hay Point",country:"Australia",draft:18,loa:320,beam:52,capacity:65,congestion:33,cost:6.8,delay:1.2,lat:72,lon:48}
+]},
+ID:{name:"Indonesia",currency:"IDR",symbol:"Rp",commodity:"Thermal Coal",origins:[
+ {name:"Indonesia",price:122,freight:17.4,supply:520000},
+ {name:"Australia",price:203,freight:21.1,supply:260000},
+ {name:"Mozambique",price:191,freight:23.8,supply:150000}
+],ports:[
+ {name:"Tanjung Jati",country:"Indonesia",draft:15,loa:300,beam:48,capacity:48,congestion:37,cost:5.9,delay:1.3,lat:50,lon:54},
+ {name:"Taboneo",country:"Indonesia",draft:18,loa:320,beam:52,capacity:62,congestion:31,cost:5.4,delay:1.1,lat:68,lon:39},
+ {name:"Muara Jawa",country:"Indonesia",draft:14,loa:290,beam:45,capacity:42,congestion:44,cost:5.8,delay:1.7,lat:78,lon:70}
+]},
+MZ:{name:"Mozambique",currency:"MZN",symbol:"MT",commodity:"Coking Coal",origins:[
+ {name:"Mozambique",price:190,freight:15.9,supply:420000},
+ {name:"Australia",price:207,freight:27.2,supply:220000},
+ {name:"Indonesia",price:173,freight:24.5,supply:170000}
+],ports:[
+ {name:"Nacala",country:"Mozambique",draft:18,loa:330,beam:52,capacity:55,congestion:26,cost:5.1,delay:1.0,lat:33,lon:38},
+ {name:"Maputo",country:"Mozambique",draft:13,loa:280,beam:43,capacity:35,congestion:43,cost:5.8,delay:1.8,lat:72,lon:77},
+ {name:"Beira",country:"Mozambique",draft:11,loa:260,beam:40,capacity:30,congestion:51,cost:5.3,delay:2.2,lat:52,lon:58}
+]},
+SG:{name:"Singapore",currency:"SGD",symbol:"S$",commodity:"Thermal Coal",origins:[
+ {name:"Indonesia",price:126,freight:12.7,supply:550000},
+ {name:"Australia",price:201,freight:16.4,supply:300000},
+ {name:"Mozambique",price:194,freight:22.5,supply:140000}
+],ports:[
+ {name:"Singapore",country:"Singapore",draft:20,loa:360,beam:60,capacity:90,congestion:36,cost:8.4,delay:.8,lat:62,lon:67},
+ {name:"Jurong",country:"Singapore",draft:17,loa:330,beam:54,capacity:58,congestion:42,cost:7.9,delay:1.1,lat:47,lon:55}
+]},
+AE:{name:"United Arab Emirates",currency:"AED",symbol:"د.إ",commodity:"Iron Ore",origins:[
+ {name:"Australia",price:210,freight:14.8,supply:420000},
+ {name:"Mozambique",price:196,freight:18.7,supply:240000},
+ {name:"Indonesia",price:178,freight:21.4,supply:180000}
+],ports:[
+ {name:"Jebel Ali",country:"UAE",draft:17,loa:360,beam:55,capacity:80,congestion:34,cost:8.2,delay:1.1,lat:50,lon:58},
+ {name:"Khalifa Port",country:"UAE",draft:16,loa:350,beam:54,capacity:70,congestion:28,cost:7.7,delay:.9,lat:67,lon:43},
+ {name:"Fujairah",country:"UAE",draft:18,loa:340,beam:54,capacity:62,congestion:25,cost:7.4,delay:.8,lat:79,lon:68}
+]},
+US:{name:"United States",currency:"USD",symbol:"$",commodity:"Iron Ore",origins:[
+ {name:"USA",price:183,freight:13.9,supply:460000},
+ {name:"Australia",price:209,freight:20.2,supply:240000},
+ {name:"Mozambique",price:194,freight:24.2,supply:160000}
+],ports:[
+ {name:"Houston",country:"USA",draft:15,loa:330,beam:52,capacity:70,congestion:48,cost:9.2,delay:2.0,lat:41,lon:61},
+ {name:"New Orleans",country:"USA",draft:14,loa:320,beam:50,capacity:65,congestion:39,cost:8.8,delay:1.7,lat:58,lon:45},
+ {name:"Baltimore",country:"USA",draft:15,loa:310,beam:48,capacity:50,congestion:31,cost:9.0,delay:1.4,lat:75,lon:70}
+]},
+GB:{name:"United Kingdom",currency:"GBP",symbol:"£",commodity:"Iron Ore",origins:[
+ {name:"Brazil",price:191,freight:14.4,supply:450000},
+ {name:"Australia",price:211,freight:21.5,supply:230000},
+ {name:"Mozambique",price:195,freight:25.4,supply:150000}
+],ports:[
+ {name:"Immingham",country:"UK",draft:14,loa:310,beam:48,capacity:52,congestion:37,cost:8.5,delay:1.5,lat:44,lon:42},
+ {name:"Port Talbot",country:"UK",draft:15,loa:320,beam:50,capacity:60,congestion:29,cost:8.1,delay:1.1,lat:68,lon:66},
+ {name:"Liverpool",country:"UK",draft:13,loa:290,beam:45,capacity:45,congestion:45,cost:8.8,delay:1.8,lat:79,lon:29}
+]}
+};
+
+const VESSELS=[
+ {type:"Handysize",capacity:40000,draft:9.8,loa:190,beam:32,avail:7,rate:.97},
+ {type:"Supramax",capacity:60000,draft:11.2,loa:210,beam:36,avail:11,rate:.91},
+ {type:"Panamax",capacity:75000,draft:12.5,loa:225,beam:32,avail:14,rate:.86},
+ {type:"Capesize",capacity:150000,draft:17,loa:290,beam:45,avail:21,rate:.76}
+];
+
+let country="IN", plan=null;
+
+function current(){return DATA[country]}
+function money(n,compact=false){
+  const d=current(), v=n;
+  if(compact && Math.abs(v)>=10000000) return d.symbol+(v/10000000).toFixed(1)+" Cr";
+  if(compact && Math.abs(v)>=1000000) return d.symbol+(v/1000000).toFixed(2)+"M";
+  return d.symbol+Math.round(v).toLocaleString("en-IN");
+}
+function today(){return new Date().toISOString().slice(0,10)}
+document.getElementById("todayText").textContent=today();
+
+function setCountry(c){
+  country=c; const d=current();
+  document.getElementById("countryName").textContent=d.name;
+  document.getElementById("currencyName").textContent=d.currency;
+  document.getElementById("commodity").value=d.commodity;
+  fillSelects();
+  renderAll();
+  showToast("Operating context changed to "+d.name);
+}
+function fillSelects(){
+  const d=current();
+  const o=document.getElementById("origin"), dest=document.getElementById("destination");
+  o.innerHTML=d.origins.map(x=>`<option>${x.name}</option>`).join("");
+  dest.innerHTML=d.ports.map(x=>`<option>${x.name}</option>`).join("");
+  if(!plan){dest.value=d.ports[0].name}
+}
+function navigate(id){
+  document.querySelectorAll(".view").forEach(v=>v.classList.toggle("active",v.id===id));
+  document.querySelectorAll(".nav button").forEach(b=>b.classList.toggle("active",b.dataset.view===id));
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+document.querySelectorAll(".nav button").forEach(b=>b.onclick=()=>navigate(b.dataset.view));
+
+function forecastValues(){
+  const d=current(), origin=d.origins[0], p=d.ports[0];
+  const base=origin.freight;
+  const vals=[base*.96,base*.98,base,base*1.01,base*1.035,base*1.06,base*1.08,base*1.11,base*1.13];
+  return vals;
+}
+function renderChart(id,vals){
+  const svg=document.getElementById(id), W=1000,H=320,pad=35;
+  const min=Math.min(...vals)*.9,max=Math.max(...vals)*1.08;
+  const pts=vals.map((v,i)=>[pad+i*(W-pad*2)/(vals.length-1),H-pad-(v-min)/(max-min)*(H-pad*2)]);
+  let grid="";
+  [0,1,2,3].forEach(i=>{let y=pad+i*(H-pad*2)/3;grid+=`<line class="axis" x1="${pad}" y1="${y}" x2="${W-pad}" y2="${y}"/>`});
+  const line=pts.map(p=>p.join(",")).join(" ");
+  const area=pts.map(p=>p.join(",")).join(" ")+` ${W-pad},${H-pad} ${pad},${H-pad}`;
+  svg.innerHTML=grid+`<polygon class="band" points="${area}"/><polyline class="hist" points="${line.slice(0,Math.max(0,line.lastIndexOf(" "))) }"/><polyline class="forecast" points="${line}"/>`+
+    `<text x="35" y="310">Now</text><text x="255" y="310">30d</text><text x="505" y="310">60d</text><text x="755" y="310">90d</text>`;
+}
+function renderHomeChart(){renderChart("homeChart",forecastValues())}
+
+function renderMetrics(){
+ const d=current(), o=d.origins[0],p=d.ports[0], f=forecastValues();
+ const q=plan?.cargo||500000, rate=f[0], end=f.at(-1);
+ document.getElementById("metrics").innerHTML=[
+  ["Current freight",money(rate)+" / MT","selected origin → port"],
+  ["90-day forecast",money(end)+" / MT",(end/rate-1>0?"+":"")+((end/rate-1)*100).toFixed(1)+"% modeled"],
+  ["Cargo requirement",q.toLocaleString()+" MT","planning scenario"],
+  ["Port congestion",p.congestion+"%","at "+p.name]
+ ].map(x=>`<div class="card metric"><div class="label">${x[0]}</div><div class="value">${x[1]}</div><div class="sub">${x[2]}</div></div>`).join("");
+ document.getElementById("contextList").innerHTML=[
+  ["Country",d.name],["Currency",d.currency],["Default origin",o.name],["Default destination",p.name],
+  ["Port draft",p.draft+" m"],["Port capacity",p.capacity+" Mt/yr"],["Data mode","Demo / model-generated"]
+ ].map(x=>`<div class="list-row"><b>${x[0]}</b><span>${x[1]}</span></div>`).join("");
+}
+
+function renderForecast(){
+ const d=current(), f=forecastValues(), base=f[0],end=f.at(-1),vol=Math.max(3,Math.round(d.ports[0].congestion/8));
+ document.getElementById("forecastMetrics").innerHTML=[
+  ["Point forecast",money(end)+"/MT","90-day horizon"],
+  ["Prediction range",money(end*.93)+"–"+money(end*1.07)+"/MT","illustrative interval"],
+  ["Uncertainty",vol>7?"High":vol>5?"Medium":"Low","linked to route conditions"],
+  ["Trend",end>base?"Increasing":"Stable","model trajectory"]
+ ].map(x=>`<div class="card metric"><div class="label">${x[0]}</div><div class="value">${x[1]}</div><div class="sub">${x[2]}</div></div>`).join("");
+ renderChart("forecastChart",f);
+ const drivers=[["Historical freight trend",31],["Commodity price",24],["Port congestion",18],["Seasonality",14],["Vessel availability",9]];
+ document.getElementById("drivers").innerHTML=drivers.map(x=>`<div style="margin:14px 0"><div class="kpi-line"><span>${x[0]}</span><span>${x[1]}%</span></div><div class="bar"><i style="width:${x[1]}%"></i></div></div>`).join("");
+}
+
+function generatePlan(e){
+ e.preventDefault();
+ const d=current(), qty=+document.getElementById("cargoQty").value, dest=document.getElementById("destination").value;
+ const port=d.ports.find(x=>x.name===dest), origin=document.getElementById("origin").value, commodity=document.getElementById("commodity").value;
+ const v=VESSELS.filter(x=>x.capacity>=Math.min(qty,150000) && x.draft<=port.draft && x.loa<=port.loa && x.beam<=port.beam).sort((a,b)=>a.rate-b.rate)[0];
+ const voyages=Math.ceil(qty/(v?.capacity||75000)), baseRate=(d.origins.find(x=>x.name===origin)?.freight||22);
+ const cost=qty*baseRate*(v?.rate||1)+qty*port.cost+port.delay*17000;
+ plan={cargo:qty,origin,destination:dest,commodity,port,vessel:v,voyages,cost,rate:baseRate,deadline:document.getElementById("deadline").value||today(),contract:document.getElementById("contract").value};
+ const result=document.getElementById("planResult");
+ if(!v){result.innerHTML=`<div class="card"><span class="status bad">No feasible vessel</span><h3 style="margin-top:12px">No vessel satisfies the current constraints.</h3><p class="small">Try another port, extend the delivery window or allow another vessel class.</p></div>`}
+ else {
+ result.innerHTML=`<div class="card"><div class="kicker">Generated plan · ${d.name}</div><h3 style="margin-top:8px">${qty.toLocaleString()} MT ${commodity}</h3>
+ <div class="grid g4" style="margin-top:14px">
+ <div class="metric"><div class="label">Origin</div><div class="value" style="font-size:18px">${origin}</div></div>
+ <div class="metric"><div class="label">Port</div><div class="value" style="font-size:18px">${dest}</div></div>
+ <div class="metric"><div class="label">Vessel</div><div class="value" style="font-size:18px">${v.type}</div></div>
+ <div class="metric"><div class="label">Estimated cost</div><div class="value" style="font-size:18px">${money(cost,true)}</div></div></div>
+ <div class="callout" style="margin-top:13px">Why this plan: ${v.type} satisfies the port's draft/LOA/beam limits, carries the requirement in ${voyages} voyage(s), and the route remains within the selected delivery context. This is a demo calculation, not a live quote.</div>
+ </div>`;
+ }
+ renderAll();navigate("home");showToast("Plan generated");
+}
+
+function renderVessels(){
+ const d=current(), p=plan?.port||d.ports[0], qty=plan?.cargo||500000;
+ document.getElementById("vesselTable").innerHTML=VESSELS.map(v=>{
+  const fit=v.draft<=p.draft&&v.loa<=p.loa&&v.beam<=p.beam, trips=Math.ceil(qty/v.capacity);
+  const cost=qty*(d.origins[0].freight||22)*v.rate;
+  return `<tr><td><b>${v.type}</b></td><td>${v.capacity.toLocaleString()} MT</td><td>${v.draft} m</td><td>${v.avail} days</td><td>${fit?'<span class="status ok">Feasible</span>':'<span class="status bad">Blocked</span>'}</td><td>${trips}</td><td>${money(cost,true)}</td><td>${fit?`<span class="small">Capacity / port checks pass</span>`:`<span class="small">${v.draft>p.draft?"Draft":"Dimensions"} exceed ${p.name} limit</span>`}</td></tr>`
+ }).join("");
+}
+
+function renderPorts(){
+ const d=current(), p=plan?.port||d.ports[0];
+ document.getElementById("portCards").innerHTML=d.ports.map(x=>`<div class="list-row"><div><b>${x.name}</b><div class="small">${x.country} · draft ${x.draft}m · ${x.capacity} Mt/yr</div></div><div style="text-align:right"><span class="status ${x.congestion>50?'bad':x.congestion>40?'warn':'ok'}">${x.congestion}% congestion</span><div class="small" style="margin-top:4px">${money(x.cost*1000000,true)} base cost index</div></div></div>`).join("");
+ const map=document.getElementById("map");map.querySelectorAll(".port-dot,.route-line").forEach(x=>x.remove());
+ d.ports.forEach((x,i)=>{
+   const dot=document.createElement("div");dot.className="port-dot";dot.style.left=x.lon+"%";dot.style.top=x.lat+"%";dot.innerHTML=`<label>${x.name}</label>`;map.appendChild(dot);
+   if(i>0){const prev=d.ports[i-1], line=document.createElement("div");line.className="route-line";line.style.left=prev.lon+"%";line.style.top=prev.lat+"%";const dx=x.lon-prev.lon,dy=x.lat-prev.lat;line.style.width=Math.sqrt(dx*dx+dy*dy)*5+"%";line.style.transform=`rotate(${Math.atan2(dy,dx)*180/Math.PI}deg)`;map.appendChild(line)}
+ });
+}
+
+function renderCharter(){
+ const qty=plan?.cargo||500000, rate=plan?.rate||current().origins[0].freight, base=qty*rate;
+ const rows=[
+  ["Spot",1.02,1.0,"High","High",Math.ceil(qty/75000),"pay current market"],
+  ["COA",.96,.97,"Medium","Medium",Math.ceil(qty/75000),"volume commitment"],
+  ["Time Charter",.93,1.04,"Medium","High",Math.ceil(qty/75000),"duration + vessel exposure"]
+ ];
+ document.getElementById("charterTable").innerHTML=rows.map(r=>`<tr><td><b>${r[0]}</b></td><td>${money(rate*r[1])}</td><td>${money(base*r[1]*r[2],true)}</td><td>${r[3]}</td><td>${r[4]}</td><td>${r[5]}</td><td>${r[6]}</td></tr>`).join("");
+}
+
+function renderProcurement(){
+ const d=current(), qty=plan?.cargo||500000;
+ let remaining=qty, arr=[];
+ d.origins.slice().sort((a,b)=>a.price+a.freight-b.price-b.freight).forEach(o=>{
+   const take=Math.min(remaining,o.supply); if(take>0){arr.push([o.name,take,o.price,o.freight]);remaining-=take;}
+ });
+ if(remaining>0)arr.push(["Uncovered",remaining,0,0]);
+ document.getElementById("procTitle").textContent=qty.toLocaleString()+" MT requirement";
+ document.getElementById("allocation").innerHTML=`<div class="table-wrap"><table><thead><tr><th>Origin</th><th>Allocation</th><th>Commodity</th><th>Freight</th><th>Source supply</th></tr></thead><tbody>${arr.map(r=>`<tr><td>${r[0]}</td><td>${r[1].toLocaleString()} MT</td><td>${money(r[2])}/MT</td><td>${money(r[3])}/MT</td><td>${r[0]==="Uncovered"?'<span class="status bad">Shortfall</span>':'Available'}</td></tr>`).join("")}</tbody></table></div>`;
+}
+
+function renderRisks(){
+ const d=current(),p=plan?.port||d.ports[0],v=plan?.vessel||VESSELS[2];
+ const risks=[
+  ["Port congestion",p.congestion,p.congestion>50?"High":p.congestion>40?"Medium":"Low"],
+  ["Vessel availability",v.avail, v.avail>18?"High":v.avail>12?"Medium":"Low"],
+  ["Freight volatility",Math.round(p.congestion*.65),p.congestion>55?"High":"Medium"],
+  ["Deadline exposure",plan?Math.min(100,Math.round((v.avail+p.delay*4))):28,plan?"Medium":"Low"]
+ ];
+ document.getElementById("riskCards").innerHTML=risks.map(r=>`<div class="card"><div class="kpi-line"><h3>${r[0]}</h3><span class="status ${r[2]==='High'?'bad':r[2]==='Medium'?'warn':'ok'}">${r[2]}</span></div><div class="value" style="font-family:var(--serif);font-size:27px;margin-top:17px">${r[1]}%</div><div class="small" style="margin-top:5px">Current scenario indicator</div></div>`).join("");
+ document.getElementById("replanText").textContent=p.congestion>50?`Congestion at ${p.name} is above the demo threshold. CONVERRA would re-check alternate ports, vessel feasibility and contract timing before accepting the original plan.`:`No automatic re-plan trigger is active. If congestion, vessel availability or the delivery deadline crosses a configured threshold, the optimizer should run again.`;
+}
+
+function simulate(){
+ const d=current(), qty=(plan?.cargo||500000)+ +document.getElementById("sCargo").value;
+ const freight=1+(+document.getElementById("sFreight").value/100), cong=+document.getElementById("sCongestion").value, delay=+document.getElementById("sDelay").value;
+ document.getElementById("sFreightV").textContent=document.getElementById("sFreight").value;
+ document.getElementById("sCongestionV").textContent=cong;
+ document.getElementById("sDelayV").textContent=delay;
+ document.getElementById("sCargoV").textContent=document.getElementById("sCargo").value;
+ const rate=(plan?.rate||d.origins[0].freight)*freight;
+ const port=plan?.port||d.ports[0];
+ const total=qty*rate+qty*port.cost+delay*22000+Math.max(0,cong-50)*qty*.018;
+ const risk=cong>70||delay>14?"High":cong>45||delay>7?"Medium":"Low";
+ document.getElementById("simulationResult").innerHTML=`<div class="kicker">Recalculated scenario</div><h3 style="margin-top:8px">${money(total,true)}</h3><div class="small">Estimated total exposure · ${qty.toLocaleString()} MT</div><div class="list" style="margin-top:15px"><div class="list-row"><b>Rate</b><span>${money(rate)}/MT</span></div><div class="list-row"><b>Delay</b><span>${delay} days</span></div><div class="list-row"><b>Congestion</b><span>${cong}%</span></div><div class="list-row"><b>Risk</b><span class="${risk==='High'?'bad':risk==='Medium'?'warn':'ok'}">${risk}</span></div><div class="list-row"><b>Port</b><span>${port.name}</span></div></div>`;
+}
+
+function counterfactual(kind){
+ const d=current(),qty=plan?.cargo||500000,base=plan?.cost||qty*(plan?.rate||d.origins[0].freight);
+ let label="",altCost=base,delta=0,reason="";
+ if(kind==="earlier"){label="14 days earlier";altCost=base*.955;reason="Earlier booking is evaluated against the modeled freight curve."}
+ if(kind==="later"){label="14 days later";altCost=base*1.075;reason="Later booking carries the modeled future-rate exposure."}
+ if(kind==="port"){const alt=d.ports.find(x=>x.name!==(plan?.destination||d.ports[0].name));label=alt?.name||"alternate port";altCost=base+(alt?.cost-(plan?.port?.cost||d.ports[0].cost))*qty;reason="Alternate port is recalculated using its handling cost and current congestion assumptions."}
+ if(kind==="vessel"){label="alternate vessel class";altCost=base*1.035;reason="Alternative vessel class is recalculated with capacity/voyage implications."}
+ if(kind==="contract"){label="COA / alternate contract";altCost=base*.97;reason="Contract scenario changes the rate exposure and flexibility assumptions."}
+ delta=altCost-base;
+ document.getElementById("counterResult").innerHTML=`<b>${label}</b><br>Current estimate: ${money(base,true)} · Alternative estimate: ${money(altCost,true)} · Difference: <strong>${money(delta,true)}</strong><br><span class="small">${reason} Demo scenario values are clearly labelled rather than presented as market facts.</span>`;
+}
+
+function renderReport(){
+ const d=current(),q=plan?.cargo||500000,p=plan?.port||d.ports[0],v=plan?.vessel||VESSELS[2],rate=plan?.rate||d.origins[0].freight,cost=plan?.cost||q*rate;
+ document.getElementById("reportBody").innerHTML=`
+ <div class="kicker">Decision report · ${d.name}</div><h2 style="margin-top:7px">${q.toLocaleString()} MT ${plan?.commodity||d.commodity}</h2>
+ <div class="report-section"><h3>Plan</h3><div class="list"><div class="list-row"><b>Origin</b><span>${plan?.origin||d.origins[0].name}</span></div><div class="list-row"><b>Destination</b><span>${p.name}</span></div><div class="list-row"><b>Vessel</b><span>${v.type}</span></div><div class="list-row"><b>Voyages</b><span>${Math.ceil(q/v.capacity)}</span></div><div class="list-row"><b>Estimated cost</b><span>${money(cost,true)}</span></div></div></div>
+ <div class="report-section"><h3>Why this plan</h3><p class="small">The prototype checks cargo quantity, vessel capacity, vessel/port dimensions, port congestion and route cost together. A production run would add the live/database-backed ML forecast, OR-Tools MILP and SHAP explanations specified in the architecture.</p></div>
+ <div class="report-section"><h3>Alternatives</h3><p class="small">Use the What-if Simulator to calculate earlier/later chartering, a different port, vessel class or contract strategy and compare cost, time and risk.</p></div>`;
+}
+
+function renderAll(){
+ renderMetrics();renderHomeChart();renderForecast();renderProcurement();renderVessels();renderPorts();renderCharter();renderRisks();renderReport();simulate();
+}
+function resetDemo(){
+ plan=null;
+ document.getElementById("cargoQty").value=500000;
+ document.getElementById("contract").value="Let optimizer decide";
+ document.getElementById("vesselPref").value="Any feasible class";
+ document.getElementById("budget").value="";
+ document.getElementById("deadline").value="";
+ document.getElementById("sFreight").value=0;document.getElementById("sCongestion").value=35;document.getElementById("sDelay").value=0;document.getElementById("sCargo").value=0;
+ fillSelects();renderAll();showToast("Scenario reset");
+}
+function showToast(t){const x=document.createElement("div");x.className="toast";x.textContent=t;document.body.appendChild(x);setTimeout(()=>x.remove(),1600)}
+
+fillSelects();renderAll();
+
+/* Master-spec behavior overrides */
+function setCurrency(c){
+ selectedCurrency=c; document.getElementById("currencySelect").value=c;
+ document.getElementById("currencyName").textContent=c+" "+FXNAME[c];
+ renderAll(); showToast("Display currency changed to "+c);
+}
+function setUnits(u){selectedUnits=u;renderAll();showToast(u==="metric"?"Metric units · MT / NM":"Imperial units · Ton / mi")}
+function convertBase(v){return v*(FX[selectedCurrency]||1)}
+function fmtMoney(v,compact=false){
+ const val=convertBase(v), sym=FXNAME[selectedCurrency]||"";
+ if(compact && Math.abs(val)>=1e6)return sym+(val/1e6).toFixed(2)+"M";
+ return sym+Math.round(val).toLocaleString("en-IN");
+}
+function enterRole(role){
+ selectedRole=role;
+ document.getElementById("roleGate").classList.add("hidden");
+ const info=ROLE_INFO[role]; document.getElementById("roleBadge").textContent=info[0].toUpperCase();
+ document.getElementById("roleDescription").textContent=info[1]+" · "+info[2]; if(document.getElementById("roleSelect"))document.getElementById("roleSelect").value=selectedRole;
+ const landing={procurement:"procurement",chartering:"charter",operations:"ports",executive:"home"}[role];
+ navigate(landing); renderAll(); showToast("Demo workspace · "+info[0]);
+}
+function openEntity(type){
+ const map={ships:["Ships","Vessel / ship intelligence","Available vessels, compatibility and voyage exposure"],
+ ports:["Ports","Port detail","East Coast India destination port"],
+ cargo:["Cargo","Cargo plan detail","Procurement quantity, commodity and transportation requirement"],
+ routes:["Routes","Route detail","Overseas origin → East Coast India destination"],
+ scenarios:["Scenarios","Scenario detail","Counterfactual and what-if decision"]};
+ const m=map[type]; document.getElementById("entityKicker").textContent="Entity detail / "+type;
+ document.getElementById("entityTitle").textContent=m[1]; document.getElementById("entitySubtitle").textContent=m[2];
+ let d=current(), p=plan?.port||d.ports[0];
+ let metrics=[];
+ if(type==="ports")metrics=[["Port",p.name,"East Coast India"],["State",p.state||"India","destination"],["Draft",p.draft+" m","maximum"],["Congestion",p.congestion+"%","current demo indicator"]];
+ if(type==="ships")metrics=[["Class",(plan?.vessel||VESSELS[2]).type,"selected feasible class"],["Capacity",(plan?.vessel||VESSELS[2]).capacity.toLocaleString()+" MT","per voyage"],["Availability",(plan?.vessel||VESSELS[2]).avail+" days","demo window"],["Port fit",((plan?.vessel||VESSELS[2]).draft<=p.draft)?"Feasible":"Review","constraint check"]];
+ if(type==="cargo")metrics=[["Commodity",plan?.commodity||"Coking Coal","selected"],["Quantity",(plan?.cargo||500000).toLocaleString()+" MT","requirement"],["Origin",plan?.origin||"Indonesia","selected source"],["Delivery",plan?.deadline||"Not set","required date"]];
+ if(type==="routes")metrics=[["Origin",plan?.origin||"Indonesia","overseas"],["Origin port",document.getElementById("originPort")?.value||ORIGINS[plan?.origin||"Indonesia"][0],"source"],["Destination",p.name,"East Coast India"],["Status","Modeled","demo route"]];
+ if(type==="scenarios")metrics=[["Base cost",fmtMoney(plan?.cost||500000*24),"current plan"],["Freight delta","+0%","scenario"],["Congestion",p.congestion+"%","port"],["Risk",p.congestion>50?"High":"Medium","indicator"]];
+ document.getElementById("entityMetrics").innerHTML=metrics.map(x=>`<div class="card metric"><div class="label">${x[0]}</div><div class="value" style="font-size:20px">${x[1]}</div><div class="sub">${x[2]}</div></div>`).join("");
+ renderChart("entityChart",forecastValues());
+ document.getElementById("entityStatus").innerHTML=`<h3>Current status</h3><div class="callout">${type==="ports"?p.name+" is modeled as an East Coast India destination.":type==="routes"?"The route follows the required overseas origin → origin port → sea route → East Coast India destination → final cargo destination chain.":"This entity is connected to the same shared planning context used by procurement, chartering, operations and executive views."}</div>`;
+ document.getElementById("entityMeaning").textContent=type==="ports"?`${p.name} currently shows ${p.congestion}% congestion in the seeded scenario.`:"The selected entity is evaluated in the same cargo, route and planning context as the rest of the platform.";
+ document.getElementById("entityWhy").textContent="Changes here can propagate to related cargo, vessel, route, charter and decision views.";
+ document.getElementById("entityAction").textContent=type==="ports"?"Compare another destination before locking the transport plan.":"Open the related planning view and test the affected decision.";
+ document.getElementById("relatedLinks").innerHTML=(type==="ships"?["Voyages","Ports","Charter plans"]:type==="ports"?["Ships","Voyages","Routes","Disruptions"]:type==="cargo"?["Procurement plans","Voyages","Origins"]:type==="routes"?["Ships","Ports","Freight forecasts"]:["Cargo plans","Charter plans","Ports"]).map(x=>`<a href="#" onclick="return false">${x} →</a>`).join("");
+ navigate("entity");
+}
+function renderRoleLanding(){
+ if(!document.getElementById("roleBadge"))return;
+ const info=ROLE_INFO[selectedRole];
+ document.getElementById("roleBadge").textContent=info[0].toUpperCase();
+ document.getElementById("roleDescription").textContent=info[1]+" · "+info[2]; if(document.getElementById("roleSelect"))document.getElementById("roleSelect").value=selectedRole;
+}
+function renderSpecGeography(){
+ const d=current();
+ // Converra's core trade geography remains overseas → East Coast India.
+ d.ports=INDIA_PORTS.map(p=>({...p}));
+ d.origins=ORIGIN_COUNTRIES.map((name,i)=>({name,price:170+i*4,freight:16+i*1.5,supply:150000+(i%4)*100000}));
+}
+function populateOriginPorts(){
+ const c=document.getElementById("origin")?.value||"Indonesia", el=document.getElementById("originPort");
+ if(el)el.innerHTML=(ORIGINS[c]||[]).map(x=>`<option>${x}</option>`).join("");
+}
+function patchCreate(){
+ const o=document.getElementById("origin"); if(o){o.onchange=populateOriginPorts}
+ populateOriginPorts();
+ const d=document.getElementById("deadline"), a=document.getElementById("availabilityDate"); if(d&&!d.value)d.value=today();if(a&&!a.value)a.value=today();
+}
+const _oldSetCountry=setCountry;
+setCountry=function(c){
+ country=c;
+ const meta=DATA[c]||EXTRA_COUNTRIES[c]||{name:c,currency:'INR'};
+ document.getElementById("countryName").textContent=meta.name; if(document.getElementById("settingsCountry"))document.getElementById("settingsCountry").textContent=meta.name; if(document.getElementById("settingsCountrySelect"))document.getElementById("settingsCountrySelect").value=c;
+ const defaultCurrency=meta.currency==='RUB'?'USD':(meta.currency||selectedCurrency);
+ if(document.getElementById("currencySelect")?.querySelector(`option[value="${defaultCurrency}"]`)){selectedCurrency=defaultCurrency;document.getElementById("currencySelect").value=defaultCurrency;}
+ document.getElementById("currencyName").textContent=selectedCurrency+" "+FXNAME[selectedCurrency];
+ fillSelects(); patchCreate(); renderAll(); showToast("Operating preference: "+meta.name+" · core lane remains overseas → East Coast India");
+};
+const _oldFill=fillSelects;
+fillSelects=function(){
+ const o=document.getElementById("origin"), dest=document.getElementById("destination");
+ if(o)o.innerHTML=ORIGIN_COUNTRIES.map(x=>`<option>${x}</option>`).join("");
+ if(dest)dest.innerHTML=INDIA_PORTS.map(x=>`<option>${x.name}</option>`).join("");
+ if(o && plan?.origin)o.value=plan.origin; if(dest && plan?.destination)dest.value=plan.destination;
+ populateOriginPorts();
+};
+const _oldGenerate=generatePlan;
+generatePlan=function(e){
+ e.preventDefault();
+ const d=current(), qty=+document.getElementById("cargoQty").value, dest=document.getElementById("destination").value;
+ const port=INDIA_PORTS.find(x=>x.name===dest)||INDIA_PORTS[0], origin=document.getElementById("origin").value;
+ const originPort=document.getElementById("originPort").value, commodity=document.getElementById("commodity").value;
+ const price=+document.getElementById("procPrice").value||185;
+ const v=VESSELS.filter(x=>x.capacity>=Math.min(qty,150000)&&x.draft<=port.draft&&x.loa<=port.loa&&x.beam<=port.beam).sort((a,b)=>a.rate-b.rate)[0];
+ const voyages=Math.ceil(qty/(v?.capacity||75000)), freight=(ORIGINS[origin]?20+ORIGIN_COUNTRIES.indexOf(origin)*1.4:22);
+ const cost=qty*(price+freight)+(port.cost*qty)+port.congestion*qty*.025;
+ plan={cargo:qty,origin,originPort,destination:dest,commodity,port,vessel:v,voyages,cost,rate:freight,deadline:document.getElementById("deadline").value||today(),contract:document.getElementById("contract").value,procurementPrice:price,availabilityDate:document.getElementById("availabilityDate").value};
+ document.getElementById("planResult").innerHTML=`<div class="card"><div class="kicker">Generated plan · ${d.name} workspace</div><h3 style="margin-top:8px">${qty.toLocaleString()} MT ${commodity}</h3><div class="grid g4" style="margin-top:14px">
+ <div class="metric"><div class="label">Origin</div><div class="value" style="font-size:17px">${origin}</div><div class="sub">${originPort}</div></div>
+ <div class="metric"><div class="label">Destination</div><div class="value" style="font-size:17px">${dest}</div><div class="sub">${port.state}</div></div>
+ <div class="metric"><div class="label">Vessel</div><div class="value" style="font-size:17px">${v?.type||"No fit"}</div><div class="sub">${voyages} voyage(s)</div></div>
+ <div class="metric"><div class="label">Estimated cost</div><div class="value" style="font-size:17px">${fmtMoney(cost,true)}</div><div class="sub">demo scenario</div></div></div>
+ <div class="callout" style="margin-top:13px">Graph → explanation → action: the plan connects procurement price, freight exposure, port constraints, vessel feasibility and delivery timing. Review the alternatives before committing.</div></div>`;
+ renderAll(); navigate("home"); showToast("Connected cargo plan generated");
+};
+const _oldRenderMetrics=renderMetrics;
+renderMetrics=function(){
+ const d=current(),o=d.origins?.[0]||{freight:22,name:"Indonesia"},p=INDIA_PORTS[0],f=forecastValues(),q=plan?.cargo||500000,rate=f[0],end=f.at(-1);
+ document.getElementById("metrics").innerHTML=[
+  ["Current freight",fmtMoney(rate)+"/MT","overseas → East Coast India"],
+  ["90-day forecast",fmtMoney(end)+"/MT",(end/rate-1>0?"+":"")+((end/rate-1)*100).toFixed(1)+"% modeled"],
+  ["Cargo requirement",q.toLocaleString()+" MT","planning scenario"],
+  ["Port congestion",p.congestion+"%","at "+p.name]
+ ].map(x=>`<div class="card metric"><div class="label">${x[0]}</div><div class="value">${x[1]}</div><div class="sub">${x[2]}</div></div>`).join("");
+ document.getElementById("contextList").innerHTML=[
+  ["Operating country",DATA[country]?.name||country],["Selected currency",selectedCurrency+" "+FXNAME[selectedCurrency]],["Trade geography","Overseas → East Coast India"],["Destination set",INDIA_PORTS.length+" supported ports"],
+  ["Default source",plan?.origin||"Indonesia"],["Units",selectedUnits==="metric"?"MT / NM":"Ton / mi"],["Workspace",ROLE_INFO[selectedRole]?.[0]||"Executive"]
+ ].map(x=>`<div class="list-row"><b>${x[0]}</b><span>${x[1]}</span></div>`).join("");
+ const p0=INDIA_PORTS[0], f0=forecastValues();
+ document.getElementById("meaningText").textContent=`The model shows ${f0[0].toFixed(1)} → ${f0.at(-1).toFixed(1)} freight exposure over the 90-day demo horizon for the selected planning context.`;
+ document.getElementById("whyText").textContent=`Port conditions at ${p0.name} and vessel availability can change the transportation cost and delivery exposure.`;
+ document.getElementById("actionText").textContent=`Compare charter timing and East Coast destination alternatives before finalizing the cargo plan.`;
+ renderRoleLanding();
+};
+function fmtMetric(v){return selectedUnits==="metric"?v+" m":(v*3.28084).toFixed(1)+" ft"}
+
+
+
+/* FINAL MASTER SPEC additions: fuel, tides, regulation, routes, alerts, copilot, connected workspace */
+const EXTRA_COUNTRIES={ZA:{name:'South Africa',currency:'ZAR'},RU:{name:'Russia',currency:'RUB'},CO:{name:'Colombia',currency:'COP'},CA:{name:'Canada',currency:'CAD'},BR:{name:'Brazil',currency:'BRL'}};
+const FUEL={IN:720,AU:690,ID:640,MZ:760,SG:650,AE:780,US:740,GB:730,ZA:710,RU:680,CO:700,CA:720,BR:705};
+const TIDES={
+ 'Paradip Port':{high:'18:40',low:'00:55',window:'17:55–19:25'},'Dhamra Port':{high:'19:05',low:'01:20',window:'18:20–19:50'},
+ 'Visakhapatnam / Vizag':{high:'17:55',low:'23:45',window:'17:15–18:35'},'Krishnapatnam':{high:'18:15',low:'00:10',window:'17:35–18:55'},
+ 'Kamarajar / Ennore':{high:'18:05',low:'00:05',window:'17:25–18:45'},'Chennai':{high:'18:20',low:'00:20',window:'17:40–19:00'},
+ 'V.O. Chidambaranar / Tuticorin':{high:'17:35',low:'23:30',window:'16:55–18:15'}
+};
+const REG_RULES=[
+ ['High seas','Fuel sulphur / MARPOL Annex VI','OK','IMO / MARPOL','2026-09'],
+ ['EEZ','Pollution, dumping and resource-zone rules','OK','Maritime Zones of India Act / official sources','2026-09'],
+ ['Contiguous zone','Customs, immigration and health checks','CHECK','Official port / customs guidance','2026-09'],
+ ['Territorial waters','Safety certificates + innocent passage','OK','DG Shipping / applicable law','2026-09'],
+ ['Port waters / internal waters','Draft, pilotage, berth and cargo rules','OK','Port authority rules','2026-09']
+];
+function setWorkspace(role){selectedRole=role;renderRoleLanding();showToast('Workspace focus: '+ROLE_INFO[role][0]);}
+function runFuelForecast(){renderFuel();showToast('Fuel forecast recalculated');}
+function renderFuel(){
+ const base=FUEL[country]||720, vals=[.96,.98,1,1.015,1.035,1.06,1.075,1.09].map(x=>base*x);
+ document.getElementById('fuelMetrics').innerHTML=[['Current bunker',fmtMoney(vals[0])+'/MT','seeded demo index'],['30-day view',fmtMoney(vals[4])+'/MT',(vals[4]/vals[0]-1)*100>0?'+'+((vals[4]/vals[0]-1)*100).toFixed(1)+'%':'flat'],['90-day view',fmtMoney(vals.at(-1))+'/MT','modeled direction'],['Sensitivity',vals.at(-1)>vals[0]*1.08?'High':'Medium','voyage exposure']].map(x=>`<div class="card metric ${x[0]==='Current bunker'?'ocean-card':''}"><div class="label">${x[0]}</div><div class="value">${x[1]}</div><div class="sub">${x[2]}</div></div>`).join('');
+ renderChart('fuelChart',vals);document.getElementById('crudeValue').textContent='+'+((country.charCodeAt(0)%7)+4)+'% proxy move';document.getElementById('fuelTrend').textContent=vals.at(-1)>vals[0]?'Rising':'Falling';document.getElementById('fuelSensitivity').textContent=vals.at(-1)>vals[0]*1.08?'High':'Medium';
+ document.getElementById('fuelMeaning').textContent=`The seeded bunker curve moves from ${fmtMoney(vals[0])} to ${fmtMoney(vals.at(-1))} over the demo horizon.`;
+ document.getElementById('fuelWhy').textContent='Fuel is a material component of voyage cost, so a rising curve increases the value of reviewing charter timing.';
+ document.getElementById('fuelAction').textContent='Review charter and route alternatives before the modeled rise is fully reflected in the plan.';
+}
+function renderTideAndReg(){
+ const p=plan?.port||INDIA_PORTS[0], tide=TIDES[p.name]||TIDES['Paradip Port'];
+ document.getElementById('tideBanner').textContent='High tide '+tide.high;document.getElementById('tideBannerText').textContent=`Arrival window ${tide.window} · low tide ${tide.low}`;
+ document.getElementById('regZones').innerHTML=REG_RULES.map(r=>`<div class="list-row"><b>${r[0]}</b><span>${r[1]}</span></div>`).join('');
+ const v=plan?.vessel||VESSELS[2];
+ document.getElementById('regChecks').innerHTML=REG_RULES.map(r=>{let status=r[2];if(r[0].startsWith('Port')&&v.draft>p.draft)status='NOT ALLOWED';return `<div class="list-row"><b>${r[1]}</b><span class="status ${status==='OK'?'ok':status==='CHECK'?'warn':'bad'}">${status}</span></div>`}).join('');
+}
+function renderRoutes(){
+ const dest=plan?.port?.name||INDIA_PORTS[0].name, origin=plan?.origin||'Indonesia', originPort=plan?.originPort||ORIGINS[origin]?.[0]||'Taboneo';
+ const rows=ORIGIN_COUNTRIES.slice(0,6).map((o,i)=>{const op=ORIGINS[o]?.[0]||'Origin port';const dist=3900+i*430;const transit=(7+i*.8).toFixed(1);return `<tr><td>${o}</td><td>${op}</td><td>${dest}</td><td>${transit} days</td><td><span class="status ${i===2?'warn':'ok'}">${i===2?'Review':'Modeled'}</span></td></tr>`}).join('');
+ document.getElementById('routeTable').innerHTML=rows;
+ const map=document.getElementById('routeMap');map.querySelectorAll('.port-dot,.route-line').forEach(x=>x.remove());
+ const pts=[[10,68,'Origin'],[36,52,originPort],[64,44,'East Coast India'],[78,61,dest]];pts.forEach((p,i)=>{const d=document.createElement('div');d.className='port-dot';d.style.left=p[0]+'%';d.style.top=p[1]+'%';d.innerHTML='<label style="color:#FCFDFF">'+p[2]+'</label>';map.appendChild(d);if(i>0){const prev=pts[i-1],dx=(p[0]-prev[0]),dy=(p[1]-prev[1]),len=Math.sqrt(dx*dx+dy*dy),line=document.createElement('div');line.className='route-line';line.style.left=prev[0]+'%';line.style.top=prev[1]+'%';line.style.width=len+'%';line.style.transform=`rotate(${Math.atan2(dy,dx)*180/Math.PI}deg)`;map.appendChild(line)}});
+}
+function renderContracts(){
+ const q=plan?.cargo||500000,rate=plan?.rate||current().origins[0].freight,base=q*rate+q*(plan?.procurementPrice||185);
+ const rows=[['Spot',base*1.00,'High','High','1 voyage window','Floating market'],['COA',base*.97,'Medium','Medium','6–12 months','Agreed freight basis'],['Time Charter',base*1.03,'Medium','High','3–6 months','Daily hire + voyage costs']];
+ document.getElementById('contractTable').innerHTML=rows.map(r=>`<tr><td><b>${r[0]}</b></td><td>${fmtMoney(r[1],true)}</td><td>${fmtMoney(r[1]/q)}/MT</td><td>${r[2]}</td><td>${r[3]}</td><td>${r[4]}</td><td>${r[5]}</td></tr>`).join('');
+}
+function renderAlerts(){
+ const p=plan?.port||INDIA_PORTS[0], f=forecastValues(), fuel=FUEL[country]||720, rising=f.at(-1)>f[0]*1.07;
+ const alerts=[
+  [rising?'Freight rise watch':'Freight stable','Forecast curve indicates '+(rising?'a modeled increase':'moderate movement')+' over the horizon.',rising?'warn':'ok'],
+  ['Fuel watch',fuel>740?'Bunker exposure is elevated in this demo scenario.':'Bunker exposure is within the modeled band.',fuel>740?'warn':'ok'],
+  ['Tide window','Next high tide at '+(TIDES[p.name]||TIDES['Paradip Port']).high+' · draft check required.','ok'],
+  ['Compliance','Water-type rulebook should be confirmed before charter commitment.','warn']
+ ];
+ document.getElementById('alertList').innerHTML=alerts.map(a=>`<div class="list-row"><b>${a[0]}</b><span class="status ${a[2]}">${a[1]}</span></div>`).join('');
+ document.getElementById('marketBanner').textContent=`Freight ${rising?'rising':'stable'} · bunker ${fuel>740?'elevated':'within modeled band'}`;document.getElementById('alertBanner').textContent=rising?'Review booking window':'Review plan assumptions';document.getElementById('alertBannerText').textContent=alerts[0][1];
+}
+function renderDisruptions(){
+ const p=plan?.port||INDIA_PORTS[0];const items=[['Port congestion',p.congestion>45?'HIGH':'MODERATE','Switch to a feasible alternate port'],['Vessel unavailable','WATCH','Re-run vessel assignment'],['Freight spike','WATCH','Review charter timing']];
+ document.getElementById('disruptionCards').innerHTML=items.map((x,i)=>`<button class="card" style="text-align:left;border:1px solid ${i===0&&p.congestion>45?'#E0A83A':'#A7BCBE'}" onclick="applyDisruption(${i})"><div class="kicker">${x[0]}</div><h3 style="margin-top:7px">${x[1]}</h3><p class="small">${x[2]}</p></button>`).join('');
+ document.getElementById('replanMetrics').innerHTML=[['Previous plan',fmtMoney(plan?.cost||500000*24,true)],['New plan',fmtMoney((plan?.cost||500000*24)*1.045,true)],['Cost change','+4.5%'],['Risk','Re-evaluated']].map(x=>`<div class="card metric"><div class="label">${x[0]}</div><div class="value" style="font-size:20px">${x[1]}</div></div>`).join('');
+}
+function applyDisruption(i){const msgs=['Port congestion increased; the optimizer should compare Dhamra / Visakhapatnam against the current destination.','Vessel availability changed; the feasible fleet should be rechecked against capacity and port limits.','Freight increased; review charter timing and contract exposure.'];document.getElementById('replanReason').textContent=msgs[i];showToast('Disruption detected · replanning context updated');}
+function copilotAnswer(q){
+ const p=plan?.port||INDIA_PORTS[0],v=plan?.vessel||VESSELS[2],f=forecastValues(),fuel=FUEL[country]||720;const x=q.toLowerCase();
+ if(x.includes('forecast')||x.includes('freight'))return `Freight is modeled from ${f[0].toFixed(1)} to ${f.at(-1).toFixed(1)} over the demo horizon. The main decision implication is charter timing; the forecast is seeded demo data, not a live quote.`;
+ if(x.includes('vessel'))return `${v.type} is the current feasible class in the seeded plan, with ${v.capacity.toLocaleString()} MT capacity and ${v.draft} m draft. Port fit and delivery timing remain constraints.`;
+ if(x.includes('port')||x.includes('paradip'))return `${p.name} is the current destination context with ${p.congestion}% modeled congestion and ${p.draft} m draft limit. Compare alternate East Coast ports before committing if congestion changes.`;
+ if(x.includes('fuel'))return `The bunker demo index is ${fuel}. Fuel is modeled as a voyage-cost driver and feeds charter exposure and scenario analysis.`;
+ if(x.includes('freight rises')||x.includes('15%')){simulate();return 'I can apply the freight scenario to the current What-If context. The recalculation remains a demo scenario until connected to the backend optimizer.'}
+ if(x.includes('risk'))return `The current risk picture combines freight movement, port congestion, vessel feasibility, tide timing and regulatory checks. Open Risk Monitor for the detailed alert stream.`;
+ if(x.includes('plan')||x.includes('500'))return `The current planning context is ${(plan?.cargo||500000).toLocaleString()} MT of ${plan?.commodity||current().commodity}, sourced from ${plan?.origin||current().origins[0].name} toward ${p.name}.`;
+ return 'I can explain the current freight forecast, fuel exposure, vessel fit, port conditions, route rules, risks and what-if scenarios using the seeded Converra context.';
+}
+function askCopilot(q){const msgs=document.getElementById('copilotMsgs');msgs.innerHTML+=`<div class="msg user">${q}</div><div class="msg ai">${copilotAnswer(q)}</div>`;msgs.scrollTop=msgs.scrollHeight;}
+function sendCopilot(){const i=document.getElementById('copilotInput'),q=i.value.trim();if(!q)return;askCopilot(q);i.value='';}
+function toggleCopilot(){document.getElementById('copilot').classList.toggle('open');document.getElementById('copilotContext').textContent='Context: '+document.querySelector('.view.active')?.id+' · '+ROLE_INFO[selectedRole][0]+' · '+current().name;}
+
+const _origRenderAll=renderAll;
+renderAll=function(){_origRenderAll();renderFuel();renderRoutes();renderContracts();renderTideAndReg();renderAlerts();renderDisruptions();};
+const _origNavigate=navigate;
+navigate=function(id){_origNavigate(id);if(document.getElementById('copilot'))document.getElementById('copilotContext').textContent='Context: '+id+' · '+ROLE_INFO[selectedRole][0]+' · '+current().name;};
+
+
+renderSpecGeography();
+document.getElementById("countrySelect").value="IN";
+document.getElementById("currencySelect").value="INR";
+document.getElementById("roleSelect").value="executive"; if(document.getElementById('settingsCountrySelect'))document.getElementById('settingsCountrySelect').value='IN';
+document.getElementById("unitSelect").value="metric";
+fillSelects();patchCreate();renderAll();
+
+</script>
+
+<div class="copilot" id="copilot">
+  <div class="copilot-head"><strong>CONVERRA COPILOT</strong><button class="btn" style="padding:5px 8px" onclick="toggleCopilot()">×</button></div>
+  <div class="copilot-body">
+    <div class="small" id="copilotContext">Context: Dashboard · demo workspace</div>
+    <div class="suggestions"><button onclick="askCopilot('Explain this forecast')">Explain forecast</button><button onclick="askCopilot('Why this vessel?')">Why this vessel?</button><button onclick="askCopilot('Compare ports')">Compare ports</button><button onclick="askCopilot('What happens if freight rises 15%?')">Run what-if</button></div>
+    <div class="copilot-msgs" id="copilotMsgs"><div class="msg ai">Ask me about freight, fuel, vessels, ports, procurement, chartering, risks or scenarios. I will use the current seeded Converra context.</div></div>
+    <div class="copilot-input"><input id="copilotInput" placeholder="Ask about the current decision…" onkeydown="if(event.key==='Enter')sendCopilot()"><button class="btn primary" onclick="sendCopilot()">Ask</button></div>
+    <div class="source-line"><b>Based on:</b> current Converra context · seeded demo data · current plan</div>
+  </div>
+</div>
+</body>
+</html>

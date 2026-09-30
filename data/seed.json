@@ -1,0 +1,265 @@
+{
+  "countries": [
+    {
+      "code": "IN",
+      "name": "India",
+      "currency": "INR"
+    },
+    {
+      "code": "AU",
+      "name": "Australia",
+      "currency": "AUD"
+    },
+    {
+      "code": "ID",
+      "name": "Indonesia",
+      "currency": "USD"
+    },
+    {
+      "code": "ZA",
+      "name": "South Africa",
+      "currency": "ZAR"
+    },
+    {
+      "code": "RU",
+      "name": "Russia",
+      "currency": "USD"
+    },
+    {
+      "code": "MZ",
+      "name": "Mozambique",
+      "currency": "USD"
+    },
+    {
+      "code": "US",
+      "name": "United States",
+      "currency": "USD"
+    },
+    {
+      "code": "CO",
+      "name": "Colombia",
+      "currency": "USD"
+    },
+    {
+      "code": "CA",
+      "name": "Canada",
+      "currency": "CAD"
+    },
+    {
+      "code": "BR",
+      "name": "Brazil",
+      "currency": "USD"
+    },
+    {
+      "code": "AE",
+      "name": "United Arab Emirates",
+      "currency": "AED"
+    },
+    {
+      "code": "SG",
+      "name": "Singapore",
+      "currency": "SGD"
+    },
+    {
+      "code": "GB",
+      "name": "United Kingdom",
+      "currency": "GBP"
+    }
+  ],
+  "ports": [
+    {
+      "name": "Paradip Port",
+      "country": "India",
+      "draft": 18,
+      "loa": 330,
+      "beam": 52,
+      "capacity": 120,
+      "congestion": 42,
+      "cost": 6.2,
+      "delay": 2.1
+    },
+    {
+      "name": "Dhamra Port",
+      "country": "India",
+      "draft": 18,
+      "loa": 330,
+      "beam": 52,
+      "capacity": 100,
+      "congestion": 32,
+      "cost": 5.8,
+      "delay": 1.1
+    },
+    {
+      "name": "Visakhapatnam / Vizag",
+      "country": "India",
+      "draft": 18,
+      "loa": 330,
+      "beam": 52,
+      "capacity": 100,
+      "congestion": 38,
+      "cost": 6.0,
+      "delay": 1.5
+    },
+    {
+      "name": "Krishnapatnam",
+      "country": "India",
+      "draft": 18,
+      "loa": 330,
+      "beam": 52,
+      "capacity": 60,
+      "congestion": 27,
+      "cost": 6.5,
+      "delay": 1.0
+    },
+    {
+      "name": "Kamarajar / Ennore",
+      "country": "India",
+      "draft": 16,
+      "loa": 320,
+      "beam": 50,
+      "capacity": 50,
+      "congestion": 35,
+      "cost": 6.7,
+      "delay": 1.4
+    },
+    {
+      "name": "Chennai",
+      "country": "India",
+      "draft": 15,
+      "loa": 310,
+      "beam": 48,
+      "capacity": 50,
+      "congestion": 49,
+      "cost": 7.0,
+      "delay": 2.0
+    },
+    {
+      "name": "V.O. Chidambaranar / Tuticorin",
+      "country": "India",
+      "draft": 14,
+      "loa": 300,
+      "beam": 46,
+      "capacity": 45,
+      "congestion": 31,
+      "cost": 7.4,
+      "delay": 1.8
+    }
+  ],
+  "vessels": [
+    {
+      "id": "VES-001",
+      "type": "Handysize",
+      "capacity": 40000,
+      "draft": 9,
+      "loa": 180,
+      "beam": 28,
+      "rate": 1.0,
+      "availability": "Available",
+      "portFit": "High"
+    },
+    {
+      "id": "VES-002",
+      "type": "Supramax",
+      "capacity": 60000,
+      "draft": 11,
+      "loa": 200,
+      "beam": 32,
+      "rate": 1.08,
+      "availability": "Available",
+      "portFit": "High"
+    },
+    {
+      "id": "VES-003",
+      "type": "Panamax",
+      "capacity": 80000,
+      "draft": 13,
+      "loa": 230,
+      "beam": 32,
+      "rate": 1.16,
+      "availability": "7 days",
+      "portFit": "High"
+    },
+    {
+      "id": "VES-004",
+      "type": "Kamsarmax",
+      "capacity": 82000,
+      "draft": 14,
+      "loa": 230,
+      "beam": 32,
+      "rate": 1.19,
+      "availability": "12 days",
+      "portFit": "Medium"
+    },
+    {
+      "id": "VES-005",
+      "type": "Capesize",
+      "capacity": 150000,
+      "draft": 18,
+      "loa": 290,
+      "beam": 45,
+      "rate": 1.42,
+      "availability": "14 days",
+      "portFit": "Medium"
+    }
+  ],
+  "origins": {
+    "Indonesia": [
+      "Taboneo",
+      "Samarinda",
+      "Muara Jawa"
+    ],
+    "Australia": [
+      "Newcastle",
+      "Hay Point",
+      "Port Hedland"
+    ],
+    "South Africa": [
+      "Richards Bay",
+      "Durban",
+      "Saldanha Bay"
+    ],
+    "Russia": [
+      "Vostochny",
+      "Vanino",
+      "Taman"
+    ],
+    "United States": [
+      "Houston",
+      "New Orleans",
+      "Norfolk"
+    ],
+    "Mozambique": [
+      "Nacala",
+      "Beira",
+      "Maputo"
+    ],
+    "Colombia": [
+      "Puerto Bolivar",
+      "Buenaventura"
+    ],
+    "Canada": [
+      "Vancouver",
+      "Prince Rupert"
+    ],
+    "Brazil": [
+      "Tubarao",
+      "Itaguai",
+      "Santos"
+    ]
+  },
+  "fuel": {
+    "IN": 720,
+    "AU": 690,
+    "ID": 640,
+    "MZ": 760,
+    "SG": 650,
+    "AE": 780,
+    "US": 740,
+    "GB": 730,
+    "ZA": 710,
+    "RU": 680,
+    "CO": 700,
+    "CA": 720,
+    "BR": 705
+  }
+}
