@@ -31,7 +31,31 @@ button:disabled{cursor:not-allowed;opacity:.45}
 .country-box label{display:block;font-size:9px;color:#B4D7D8;text-transform:uppercase;letter-spacing:.12em;margin-bottom:6px}
 .country-box select{width:100%;background:#183A43;border:1px solid rgba(180,215,216,.35);color:#FCFDFF;padding:11px 12px;border-radius:4px}
 .nav-title{font-size:9px;color:#B4D7D8;text-transform:uppercase;letter-spacing:.15em;padding:0 10px 7px}
-.nav{display:grid;gap:2px}
+.nav{
+  display:grid;
+  gap:2px;
+  max-height:calc(100vh - 500px);
+  overflow-y:auto;
+  overflow-x:hidden;
+  padding-right:4px;
+}
+ .nav::-webkit-scrollbar{
+  width:5px;
+}
+
+.nav::-webkit-scrollbar-track{
+  background:transparent;
+}
+
+.nav::-webkit-scrollbar-thumb{
+  background:#548C92;
+  border-radius:10px;
+}
+
+.nav{
+  scrollbar-width:thin;
+  scrollbar-color:#548C92 transparent;
+}
 .nav button{border:0;background:none;color:#D8E8E9;text-align:left;padding:10px 11px;border-radius:4px}
 .nav button:hover{background:rgba(180,215,216,.12);color:#FCFDFF}
 .nav button.active{background:#548C92;color:#FFF;border-left:3px solid #FBEDB0}
